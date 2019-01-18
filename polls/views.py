@@ -7,6 +7,9 @@ import subprocess
 import sys
 import requests
 
+from time import time
+from urllib.parse import urlencode
+
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.core import serializers
@@ -17,14 +20,7 @@ from django.shortcuts import get_object_or_404, render
 #from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 #from django.contrib.auth.decorators import permission_required
 
-
 from .models import Choice, Question, Passage
-#####################################################################################
-
-from __future__ import print_function
-from hashlib import md5
-from time import time
-from urllib.parse import urlencode
 
 API_KEY = 'c301f49b5000085fafc0dfb1d696d8855e78a46a'
 #API_KEY = '{{5974948d3baa3d1cabc4eb00e4099e3d785d43df}}'
