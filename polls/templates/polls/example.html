@@ -1,0 +1,13 @@
+<link rel="stylesheet" type="text/css" href="http://www.gnpcb.org/esv/assets/style/text.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}esv_api.css" />
+<script type="text/javascript" src="{{ STATIC_URL }}esv_api.js"></script>
+
+{% load esv_api %}
+<h1>Verses</h1>
+
+<a href="#" class="esv_popout">John 3:16</a>
+<div class="esv_lookup">{{ "John 3:16"|esv_lookup }}</div>
+
+<a href="#" class="esv_popout">Psalm 147:3-5</a>
+<div class="esv_lookup">{{ "Psalm 147:3-5"|esv_lookup }}</div>
