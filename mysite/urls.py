@@ -20,9 +20,9 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('polls/', include('polls.urls')),
+    path('esvapp/', include('esvapp.urls')),
     # Add URL maps to redirect the base URL to our application
-    path('', RedirectView.as_view(url='/polls/', permanent=True)),
+    path('', RedirectView.as_view(url='/esvapp/', permanent=True)),
     # Add Django site authentication urls (for login, logout, password management)
     path('accounts/', include('django.contrib.auth.urls')),
 ]

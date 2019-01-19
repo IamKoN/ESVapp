@@ -10,7 +10,7 @@ import requests
 from time import time
 from urllib.parse import urlencode
 
-from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.core import serializers
 from django.utils import timezone
@@ -62,7 +62,7 @@ class NotFound(ESVError):
         return 'No passage found'
   
 class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
+    template_name = 'esvapp/index.html'
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
@@ -71,7 +71,7 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Question
-    template_name = 'polls/detail.html'
+    template_name = 'esvapp/detail.html'
 
     def get_queryset(self):
         """ Excludes any questions that aren't published yet """
@@ -79,7 +79,7 @@ class DetailView(generic.DetailView):
 
 class ResultsView(generic.DetailView):
     model = Question
-    template_name = 'polls/results.html'
+    template_name = 'esvapp/results.html'
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -87,7 +87,7 @@ def vote(request, question_id):
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form
-        return render(request, 'polls/detail.html', {
+        return render(request, 'esvapp/detail.html', {
             'question': question,
             'error_message': "You didn't select a choice.",
         })
@@ -96,7 +96,7 @@ def vote(request, question_id):
         selected_choice.save()
         # Return HttpResponseRedirect after successfully dealing with POST data
         # to prevent data from being posted twice if a user hits the Back button
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        return HttpResponseRedirect(reverse('esvapp:results', args=(question.id,)))
 
 def fetch_url(url, params, headers):
     """Fetch a URL using cURL and parse response as JSON.
