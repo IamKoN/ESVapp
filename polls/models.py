@@ -5,10 +5,12 @@ import re
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse                 # To generate URLS by reversing URL patterns
-from datetime import date
-from django.contrib.auth.models import User     # To assign User as a borrower
 
-from .views import NotFound
+class NotFound(Exception):
+    """Raised if no passage found"""
+    def __str__(self):
+        return 'No passage found'
+
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
@@ -31,7 +33,7 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
-
+        
 class Passage(models.Model):
     """A Bible passage.
     Attributes:
