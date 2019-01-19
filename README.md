@@ -1,5 +1,5 @@
 =====
-# **ESVnote
+# ESVnote
 =====
 
 ESVnote is a simple Django app to take notes that are accessible online.
