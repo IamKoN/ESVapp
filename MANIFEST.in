@@ -1,5 +1,5 @@
 include LICENSE
 include README
-recursive-include polls/static *
-recursive-include polls/templates *
+recursive-include esvapp/static *
+recursive-include esvapp/templates *
 recursive-include docs *
