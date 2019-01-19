@@ -20,7 +20,7 @@ from django.shortcuts import get_object_or_404, render
 #from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 #from django.contrib.auth.decorators import permission_required
 
-from .models import Choice, Question, Passage
+from .models import Question, Passage, Choice
 
 API_KEY = 'c301f49b5000085fafc0dfb1d696d8855e78a46a'
 #API_KEY = '{{5974948d3baa3d1cabc4eb00e4099e3d785d43df}}'
