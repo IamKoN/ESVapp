@@ -10,7 +10,7 @@ from django.conf import settings
 from django_inlines.inlines import Registry
 
 from .models import Question
-
+"""
 class GetPassageTestCase(TestCase):
     
     def test_get_passage(self):
@@ -68,7 +68,7 @@ class PassageInlineTestCase(TestCase):
         value = '{{ passage gen 1:7 footnotes=off }}'
         OUT = '<div class="esv"><h2>Genesis 1:7 <object type="application/x-shockwave-flash"  data="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001007" width="40" height="12" class="audio"><param name="movie" value="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001007" /><param name="wmode" value="transparent" /></object></h2>\n<div class="esv-text"><p id="p01001007.01-1"><span class="verse-num" id="v01001007-1">7&nbsp;</span>And God made the expanse and separated the waters that were under the expanse from the waters that were above the expanse. And it was so.  (<a href="http://www.esv.org" class="copyright">ESV</a>)</p>\n</div>\n</div>'
         self.assertEqual(self.inlines.process(value), OUT)
-
+"""
 class PassageTemplateTagTestCase(TestCase):
     
     def assert_render(self, expected, template_string, context_dict=None):
@@ -154,7 +154,7 @@ class QuestionModelTests(TestCase):
             """
             If no questions exist, an appropriate message is displayed.
             """
-            response = self.client.get(reverse('polls:index'))
+            response = self.client.get(reverse('esvapp:index'))
             self.assertEqual(response.status_code, 200)
             self.assertContains(response, "No polls are available.")
             self.assertQuerysetEqual(response.context['latest_question_list'], [])
@@ -165,7 +165,7 @@ class QuestionModelTests(TestCase):
             index page.
             """
             create_question(question_text="Past question.", days=-30)
-            response = self.client.get(reverse('polls:index'))
+            response = self.client.get(reverse('esvapp:index'))
             self.assertQuerysetEqual(
                 response.context['latest_question_list'],
                 ['<Question: Past question.>']
@@ -177,7 +177,7 @@ class QuestionModelTests(TestCase):
             the index page.
             """
             create_question(question_text="Future question.", days=30)
-            response = self.client.get(reverse('polls:index'))
+            response = self.client.get(reverse('esvapp:index'))
             self.assertContains(response, "No polls are available.")
             self.assertQuerysetEqual(response.context['latest_question_list'], [])
 
@@ -188,7 +188,7 @@ class QuestionModelTests(TestCase):
             """
             create_question(question_text="Past question.", days=-30)
             create_question(question_text="Future question.", days=30)
-            response = self.client.get(reverse('polls:index'))
+            response = self.client.get(reverse('esvapp:index'))
             self.assertQuerysetEqual(
                 response.context['latest_question_list'],
                 ['<Question: Past question.>']
@@ -200,7 +200,7 @@ class QuestionModelTests(TestCase):
             """
             create_question(question_text="Past question 1.", days=-30)
             create_question(question_text="Past question 2.", days=-5)
-            response = self.client.get(reverse('polls:index'))
+            response = self.client.get(reverse('esvapp:index'))
             self.assertQuerysetEqual(
                 response.context['latest_question_list'],
                 ['<Question: Past question 2.>', '<Question: Past question 1.>']
@@ -213,7 +213,7 @@ class QuestionModelTests(TestCase):
             returns a 404 not found.
             """
             future_question = create_question(question_text='Future question.', days=5)
-            url = reverse('polls:detail', args=(future_question.id,))
+            url = reverse('esvapp:detail', args=(future_question.id,))
             response = self.client.get(url)
             self.assertEqual(response.status_code, 404)
 
@@ -223,6 +223,6 @@ class QuestionModelTests(TestCase):
             displays the question's text.
             """
             past_question = create_question(question_text='Past Question.', days=-5)
-            url = reverse('polls:detail', args=(past_question.id,))
+            url = reverse('esvapp:detail', args=(past_question.id,))
             response = self.client.get(url)
             self.assertContains(response, past_question.question_text)
