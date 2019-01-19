@@ -21,13 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
-#SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '&%4hhs)233(_fdbba23+sda23@16!~nadsasd^fab98x9c_cl#009ad3-91')
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','-u*qkr4p-ceqq9_e5+6bwi(1k+avmw$a19y^9(dcrvdn)pa8f5')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','-&%4hhs)233(_fdbba23+sda23@16!~nadsasd^fab98x9c_cl#009ad3-91')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 TEMPLATE_DEBUG = False
 
@@ -95,16 +92,16 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        #'NAME': os.path.join(BASE_DIR, 'db.postgresql'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
 # Heroku: Update database configuration from $DATABASE_URL.
 
 #DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
-db_from_env = dj_database_url.config(conn_max_age=500, ssl_require=True)
-DATABASES['default'].update(db_from_env)
+#db_from_env = dj_database_url.config(conn_max_age=500, ssl_require=True)
+#DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

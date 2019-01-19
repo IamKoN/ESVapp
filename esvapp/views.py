@@ -141,7 +141,7 @@ def search(request):
     Returns Passage: Passage from API
     """
     query = request.GET.get('query')
-    queryset = Passage.objects.filter(name__istartswith= query)
+    queryset = Passage.objects.filter(name__contains = query)
 
     # can also display data on index.html
     context = {
