@@ -1,18 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>results</title>
-</head>
-<body>
-<h1>{{ question.question_text }}</h1>
+{% extends 'esvapp/search.html' %}
 
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-{% endfor %}
-</ul>
-
-<a href="{% url 'esvapp:detail' question.id %}">Vote again?</a>
-</body>
-</html>
+{% block result %}
+    <h1>{{ Search Results }}</h1>
+    {% if no_results_found %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Results Not Found.</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% else %}
+    <div class="container">
+        <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+            <div class="col">
+                <h3>Query : {{user_query}}</h3>
+                <p>Reference : {{ref}}</p>
+                <p>Passage : {{passage_obj}}</p>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

@@ -4,7 +4,9 @@ body {
     padding: 0;
     font-size: 14px;
     color: #333;
-    background: white url("images/mphg2.jpg") no-repeat;
+    background: white url("images/esv_logo_wide.jpg") no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 /* GLOBAL DEFAULTS */
@@ -133,12 +135,3 @@ hr {
     font-size: 1px;
     line-height: 1px;
 }
-
-.sidebar-nav {
-    margin-top: 20px;
-    padding: 0;
-    list-style: none;
-}
-
-a.esv_popout{ display:block; }
-.esv_lookup { display:none; }

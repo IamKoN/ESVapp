@@ -19,11 +19,11 @@ from django.urls import include, path
 from django.views.generic import RedirectView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('esvapp/', include('esvapp.urls')),
     # Add URL maps to redirect the base URL to application
     path('', RedirectView.as_view(url='/esvapp/', permanent=True)),
+    path('admin/', admin.site.urls),
+    path('esvapp/', include('esvapp.urls')),
     # Add Django site authentication urls (for login, logout, password management)
-    path('accounts/', include('django.contrib.auth.urls')),
+    #path('accounts/', include('django.contrib.auth.urls')),
 ]
 

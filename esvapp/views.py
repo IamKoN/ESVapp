@@ -1,30 +1,26 @@
-
-import datetime
-import json
 import os
 import re
-import subprocess
 import sys
-import requests
-
+import subprocess
+import datetime
 from time import time
 from urllib.parse import urlencode
+from django.utils import timezone
 
+import json
+import requests
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.core import serializers
-from django.utils import timezone
 from django.views import generic
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.shortcuts import get_object_or_404, render
-#from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-#from django.contrib.auth.decorators import permission_required
+from django.shortcuts import get_object_or_404, render, redirect
 
-from .models import Question, Passage, Choice
+from .models import Passage
 
+# ESV API parameters
 API_KEY = 'c301f49b5000085fafc0dfb1d696d8855e78a46a'
-#API_KEY = '{{5974948d3baa3d1cabc4eb00e4099e3d785d43df}}'
-API_URL = 'https://api.esv.org/v3/passage/text/'
+API_SEARCH_URL = 'https://api.esv.org/v3/passage/search/'
+API_TEXT_URL = 'https://api.esv.org/v3/passage/text/'
 
 API_OPTIONS = {
     'include-passage-references': 'false',
@@ -45,125 +41,123 @@ API_OPTIONS = {
 }
 
 # HTTP request headers
+ESV_HEADER = 'Authorization: Token %s' % API_KEY
 API_HEADERS = {
     'Accept': 'application/json',
-    'Authorization': 'Token %s' % API_KEY,
+    'Authorization': 'Token %s' % API_KEY
 }
 
+# Error Handling
 class ESVError(Exception):
-    """Base error class"""
+    def __init__(self, status=200, msg=''):
+        self.status = status
+        self.msg = msg
+
+class NotFound(ESVError):
+    def __str__(self):
+        return 'No passage found'
 
 class APIError(ESVError):
     """Raised if API call fails"""
 
-class NotFound(ESVError):
-    """Raised if no passage found"""
-    def __str__(self):
-        return 'No passage found'
-  
+# Views
 class IndexView(generic.ListView):
     template_name = 'esvapp/index.html'
-    context_object_name = 'latest_question_list'
-
+    model = Passage
+    context_object_name = 'curr_passage_list'
     def get_queryset(self):
-        """ Return last five questions """
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
-
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = 'esvapp/detail.html'
-
-    def get_queryset(self):
-        """ Excludes any questions that aren't published yet """
-        return Question.objects.filter(pub_date__lte=timezone.now())
+        # Return last five questions
+        return Passage.objects.all()
 
 class ResultsView(generic.DetailView):
-    model = Question
     template_name = 'esvapp/results.html'
+    model = Passage
 
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form
-        return render(request, 'esvapp/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Return HttpResponseRedirect after successfully dealing with POST data
-        # to prevent data from being posted twice if a user hits the Back button
-        return HttpResponseRedirect(reverse('esvapp:results', args=(question.id,)))
+"""
+class SearchView(generic.View):
 
-def fetch_url(url, params, headers):
-    """Fetch a URL using cURL and parse response as JSON.
-    Args:
-        url (str): Base URL without GET parameters.
-        params (dict): GET parameters.
-        headers (dict): HTTP headers.
-    Returns:
-        object: Deserialised HTTP JSON response.
-    Raises:
-        APIError: Raised if API returns an error.
-    """
-    # Encode GET parameters and add to URL
-    qs = urlencode(params)
-    url = url + '?' + qs
+    def get_passage(self,request):
+        API_TEXT_URL = 'https://api.esv.org/v3/passage/text/'
+        query = request.GET.get('q', '')
 
-    # Build cURL command
-    cmd = ['/usr/bin/curl', '-sSL', url]
-    for k, v in headers.items(): cmd.extend(['-H', '{}: {}'.format(k, v)])
+        # Combine query and options into GET parameters
+        PARAMS = dict(q=query)
+        PARAMS.update(API_OPTIONS)
+        qs = urlencode(PARAMS)
 
-    # Run command and parse response
-    output = subprocess.check_output(cmd)
-    data = json.loads(output)
-    if 'detail' in data: raise APIError(data['detail'])
-    return data
+        # Execute request
+        response = requests.get(API_TEXT_URL, params=PARAMS, headers=API_HEADERS)
+        try:
+            passages = response.json()['passages']
+        except (KeyError, Passage.DoesNotExist):
+            return render(request, 'esvapp/search.html', context={'search_results': 'No results found'})
+        else:
+            if passages:
+                passage_text = passages[0].strip()
+            else:
+                passage_text = 'Error: Passage not found'
+            #data = json.loads(response)
+            #passages = json.dumps(data)
+            return render(request, 'esvapp/search.html', context={'passage_list': response},content_type='application/json')
+"""
 
-def exit_with_error(title, err, tb=False):
-    """
-    Show an error message in Alfred and exit script.
-    Args:
-        title (unicode): Title of item.
-        err (Exception): Error whose message to show as item subtitle.
-    """
-    output = {'items': [{'title': title, 'subtitle': str(err)}]}
-    json.dump(output, sys.stdout)
-    sys.exit(1)  # 1 indicates something went wrong
+def search_api_search(request):
+    template_name = 'esvapp/search.html'
+    model = Passage
+    query = request.GET.get('q', '')  
+    PARAMS = dict(q=query)
+    response = requests.get(API_SEARCH_URL, params=PARAMS, headers=API_HEADERS)
+    return render(request, template_name, context={"title": "Search Results List", 'passage_list': response},content_type='application/json')
 
-def search(request):
-    """
-    Perform ESV API query
-    Args: query (unicode): Search string.
-    Returns Passage: Passage from API
-    """
-    query = request.GET.get('query')
-    queryset = Passage.objects.filter(name__contains = query)
-
-    # can also display data on index.html
-    context = {
-        "title": "Passage List",
-        "objects": queryset
-    }
-    serialized_queryse = serializers.serialize('json', queryset)
-    # create json file
-    with open('data.json', 'w') as outfile:
-        json.dump(serialized_queryse, outfile)
-
+def search_api_text(request):
+    template_name = 'esvapp/search.html'
+    model = Passage
+    query = request.GET.get('q', '')
     # Combine query and options into GET parameters
-    params = dict(q=query.encode('utf-8'))
-    params.update(API_OPTIONS)
-
+    PARAMS = dict(q=query)
+    PARAMS.update(API_OPTIONS)
     # Execute request
-    data = fetch_url(API_URL, params, API_HEADERS)
-    passage = Passage.from_response(data)
+    response = requests.get(API_TEXT_URL, params=PARAMS, headers=API_HEADERS)
+    try:
+        passages = response.json()['passages']
+        ref = response.json()['canonical']
+    except (KeyError, Passage.DoesNotExist):
+        return render(request, template_name, context={'search_results': 'No results found'})
+    else:
+        if passages:
+            passage_text = passages[0].strip()
+            
+        else:
+            passage_text = 'Error: Passage not found'
+        # Render the HTML template search.html with the data in the context variable
+        return render(request, template_name, context={'passage_list': response},content_type='application/json')
 
-    # Render the HTML template index.html with the data in the context variable.
-    #return render(request,'polls/index.html', context=context,)
+def search_api(request):
+    model = Passage
+    query = request.GET.get('q', '')
+    if request.method == 'POST':
+        user_query = request.POST.get('user_query')
+        try:
+            reference, passage_obj = get_passage_text(user_query)
+             # Render the HTML template results.html with the data in the context variable
+            return render(request,'esvapp/results.html', {'reference':reference, 'passage_obj':passage_obj,'user_query':user_query},content_type='application/json')
+        except NotFound as e:
+            if e.status == 404:
+                return render(request, 'esvapp/results.html', {'no_results_found': True})
+            else:
+                return HttpResponse('ESV API Error', status=e.status) 
+    else:
+        # Render the HTML template search.html
+        return render(request, 'esvapp/search.html',{})
 
-    # display data at http://127.0.0.1:8000/
-    #return HttpResponse(serialized_queryse, content_type='application/json')
-    return HttpResponse(passage, content_type='application/json')
+def get_passage_text(user_query):
+    # Combine query and options into GET parameters
+    PARAMS = dict(q=user_query)
+    PARAMS.update(API_OPTIONS)
+    # Execute request
+    response = requests.get(API_TEXT_URL, params=PARAMS, headers=API_HEADERS)
+    passages = response.json()['passages']
+    ref = response.json()['canonical']
+    if response.status_code == 404:
+        raise NotFound(status=404, msg='Error: Passage not found')
+    return ref, passages[0].strip() if passages else 'Error: Passage not found'
