@@ -1,5 +1,5 @@
 =====
-# ESVnote
+#ESVnote
 =====
 
 ESVnote is a simple Django app to take notes that are accessible online.
@@ -66,24 +66,15 @@ To delpoy to Heroku on Windows 10
 
     django_heroku.settings(locals())
 
-
-If you need to migrate a local db to a Heroku db
-------------------------------------------------
-1. Reset Heroku remote database
+4. Reset Heroku remote database
 
     $ heroku pg:reset <remote_db_resource_name> -a <your_heroku_app_name>
 
-2. Run
-
-   $ heroku pg:push <your_local_db_name> <remote_db_resource_name> -a <your_heroku_app_name>
-
-*OR*
-
-2. Dump localdb from command terminal:
+5. Dump localdb from command terminal:
     
     $ pg_dump -h localhost -p 5432 -U <your_local_db_username> -F c -b -v -f <your_file_name>.dump <your_local_db_name>
 
-3. Restore Heroku postgre db with dump file
+6. Restore Heroku postgre db with dump file
 
     $ pg_restore --verbose --no-acl --no-owner -U <remote_db_username> -h <remote_db_host> -p 5432 -d <remote_db_name> <your_path_to_dump_file/your_file_name.dump>
 
