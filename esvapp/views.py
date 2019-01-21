@@ -15,33 +15,26 @@ from .models import Book, Chapter, Verse
 def index(request):
     return render(request, 'esvapp/index.html')
 
-def search_api_search(request):
-    user_query = request.POST.get('q', 'default_value')
-    request_params = dict(q=user_query)
-    response = requests.get(API_SEARCH_URL, params=request_params, headers=API_HEADERS)
-    passage_obj = response.json()
-    context = {
-        'user_query': user_query,
-        'total_pages': passage_obj['total_pages'],
-        'page': passage_obj['page'],
-        'total_results' : passage_obj['total_results'],
-        'all_results' : passage_obj['results'],
-    }
-    return render(request, 'esvapp/results.html', context=context,content_type='application/json')
-
 class SearchView(generic.View):
     #context_object_name = 
     template_name ='esvapp/search.html'
 
     def post(self,request):
         user_query = request.POST.get('q', 'default_value')
+        user_query2 = request.GET.get('q', 'default_value')
         try:
-            passage_obj = get_passage_text(user_query)
+            text_obj = get_passage_text(user_query)
+            search_obj = get_passage_search(user_query)
             context = {
                 'no_results_found': False,
-                'user_query': passage_obj['query'],
-                'reference': passage_obj['canonical'],
-                'passages': passage_obj['passages'],
+                'user_query': user_query,
+                #'user_query': text_obj['query'],
+                'total_pages': search_obj['total_pages'],
+                'page': search_obj['page'],
+                'total_results' : search_obj['total_results'],
+                'all_results' : search_obj['results'],
+                'reference': text_obj['canonical'],
+                'passages': text_obj['passages'],
             }
             return render(request,'esvapp/results.html', context=context)
         except NotFound as e:
@@ -52,6 +45,13 @@ class SearchView(generic.View):
     
     def get(self,request):
         return render(request, 'esvapp/search.html',{})
+    
+def get_passage_search(user_query):
+    request_params = dict(q=user_query)
+    response = requests.get(API_SEARCH_URL, params=request_params, headers=API_HEADERS)
+    if response.status_code == 404:
+        raise NotFound(status=404, msg='Error: Results not found')
+    return response.json()
 
 def get_passage_text(user_query):
     request_params = dict(q=user_query)

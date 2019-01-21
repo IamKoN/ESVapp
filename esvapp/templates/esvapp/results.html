@@ -1,7 +1,7 @@
 {% extends 'esvapp/search.html' %}
 
 {% block result %}
-    <h1>ESV Bible search results</h1>
+    <h2 class = center-align >Search Results</h2>
     {% if no_results_found %}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Results Not Found.</strong>
@@ -14,13 +14,14 @@
         <div class="row">
             <div class="col">
                 <h3>Query : {{user_query}}</h3>
-                <p>Page : {{page}}</p>
-                <p>Total Pages : {{total_pages}}</p>
-                <p>Total Results : {{total_results}}</p>
-                <p>Results : {{all_results}}</p>
-                
-                <p>Reference : {{reference}}</p>
-                <p>Passages : {{passages}}</p>
+                <ol>
+                    <li>Page : {{page}}</li>
+                    <li>Total Pages : {{total_pages}}</li>
+                    <li>Total Results : {{total_results}}</li>
+                    <li>Results : {{all_results}}</li>
+                    <li>Reference : {{reference}}</li>
+                    <li>Passages : {{passages}}</li>
+                </ol>
             </div>
         </div>
     </div>
