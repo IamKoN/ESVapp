@@ -1,10 +1,9 @@
 {% extends 'esvapp/search.html' %}
 
 {% block result %}
-    <h2 class = center-align >Search Results</h2>
     {% if no_results_found %}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Results Not Found.</strong>
+        <strong>{{error_msg}}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
