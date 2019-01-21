@@ -1,15 +1,16 @@
 import datetime
 import unittest
 
-from django.urls import reverse
-from django.test import TestCase
-from django.utils import timezone
-
-from django.template import Template, Context, TemplateSyntaxError
 from django.conf import settings
+from django.template import Template, Context, TemplateSyntaxError
+from django.test import TestCase
+from django.urls import reverse
+from django.utils import timezone
 from django_inlines.inlines import Registry
 
 from .models import Question
+
+# Manage test cases
 """
 class GetPassageTestCase(TestCase):
     

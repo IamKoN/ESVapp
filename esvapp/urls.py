@@ -2,14 +2,16 @@ from django.urls import path
 
 from . import views
 
+# Manage URL patterns
+
 app_name = 'esvapp'
 
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
-    #path('', views.search_api_text, name='index'),
-    path('search/', views.search_api_text, name='search'),
+    path('', views.index, name='index'),
+    path('search/', views.SearchView.as_view(), name='search'),
     path('search_test/', views.search_api_search, name='search_test'),
-    path('search/<str:user_query>/', views.ResultsView.as_view(), name='results'),
-    #path('search_view/', views.SearchView.as_view(), name='search_view'),
-    #path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
+    path('esvbible/', views.BookList.as_view(), name='books'),
+    path('esvbible/<str:book>/', views.ChapterList.as_view(), name='chapters'),
+    path('esvbible/<str:book>/<int:chapter>/', views.VerseList.as_view(), name='verses'),
+    path('esvbible/<str:book>/<int:chapter>/<int:verse>/', views.VerseDetail.as_view(), name='verse_detail'),
 ]

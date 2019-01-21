@@ -21,11 +21,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','-&%4hhs)233(_fdbba23+sda23@16!~nadsasd^fab98x9c_cl#009ad3-91')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY','-&%4hhs)233(_fdbba23+sda23@16!~nadsasd^fab98x9c_cl#009ad3-91')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+DEBUG = bool(os.getenv('DJANGO_DEBUG', True))
 TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = [
@@ -163,3 +163,33 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
+
+# ESV API parameters
+API_KEY = 'c301f49b5000085fafc0dfb1d696d8855e78a46a'
+API_SEARCH_URL = 'https://api.esv.org/v3/passage/search/'
+API_TEXT_URL = 'https://api.esv.org/v3/passage/text/'
+
+API_OPTIONS = {
+    'include-passage-references': 'false',
+    'include-first-verse-numbers': 'false',
+    'include-verse-numbers': 'false',
+    'include-footnotes': 'false',
+    'include-footnote-body': 'false',
+    'include-short-copyright': 'false',
+    'include-passage-horizontal-lines': 'false',
+    'include-heading-horizontal-lines': 'false',
+    'include-headings': 'false',
+    'include-selahs': 'false',
+    'indent-paragraphs': '0',
+    'indent-poetry': 'false',
+    'indent-poetry-lines': '0',
+    'indent-declares': '0',
+    'indent-psalm-doxology': '0'
+}
+
+# HTTP request headers
+ESV_HEADER = 'Authorization: Token %s' % API_KEY
+API_HEADERS = {
+    'Accept': 'application/json',
+    'Authorization': 'Token %s' % API_KEY
+}

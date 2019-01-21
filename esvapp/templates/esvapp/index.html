@@ -1,12 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>index</title>
-</head>
-<body>
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'esvapp/index.css' %}">
-<p>Welcome to ESV Bible Search!</p>
-</body>
-</html>
+{% extends 'esvapp/base.html' %}
+{% block body_block %}
+
+<div class="container">
+     <div class="jumbotron">
+        <h1>Welcome to ESV Bible Search</h1>
+     </div>
+  <div class="jumbotron lead">
+    <h3>Enter a word or reference and search</h3>
+    <ol>
+      <li>Related text will be returned</li>
+      <li>References will be returned</li>
+      <li>Soon audio will aslo be returned</li>
+    </ol>
+  </div>
+</div>
+
+{% endblock %}

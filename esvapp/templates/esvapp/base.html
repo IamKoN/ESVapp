@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>ESV Bible Search</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'esvapp/index.css' %}">
+    </head>
+    <body class="background">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light ">
+            <a class="navbar-brand mb-0 h1" href="{% url 'esvapp:index' %}">ESV Bible Search</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="{% url 'admin:index' %}">Admin</a>
+                    <a class="nav-item nav-link active" href="{% url 'esvapp:search' %}">Search</a>
+                </div>
+            </div>
+        </nav>
+        {% block body_block %}
+        {% endblock %}
+    </body>
+</html>

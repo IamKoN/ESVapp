@@ -89,4 +89,3 @@ If you need to migrate a local db to a Heroku db
 
 7. Visit https://<your_heroku_app_name>.herokuapp.com/esvnote to use
     Visit https://<your_heroku_app_name>.herokuapp.com/admin to manage esvnote
-  

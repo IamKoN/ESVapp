@@ -1,9 +1,6 @@
-import datetime
-import uuid                                     # For unique book instances
-import re
 from django.db import models
-from django.utils import timezone
-from django.urls import reverse                 # To generate URLS by reversing URL patterns
+
+# Manage database models
 
 """
 class SearchManager(models.Manager):
@@ -14,8 +11,20 @@ class SearchManager(models.Manager):
         return qs
 """    
 
-class Passage(models.Model):
-    passage_text = models.CharField(max_length = 500)
+class Book(models.Model):
+    book_name = models.CharField(max_length = 50)
 
     def __str__(self):
-        return self.passage_text
+        return self.book_name
+
+class Chapter(models.Model):
+    chapter_num = models.IntegerField
+
+    def __str__(self):
+        return self.chapter_num
+
+class Verse(models.Model):
+    verse_num = models.IntegerField
+
+    def __str__(self):
+        return self.verse_num

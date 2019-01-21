@@ -1,6 +1,9 @@
 from django.contrib import admin
 
-# Register models
-from .models import Passage
+from .models import Book, Chapter, Verse
 
-admin.site.register(Passage)
+# Register models
+
+admin.site.register(Book)
+admin.site.register(Chapter)
+admin.site.register(Verse)
