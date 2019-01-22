@@ -9,22 +9,15 @@
     </div>
     {% else %}
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <h3></h3>
-                <u1> 
-                    <li>Query : {{user_query}}</li>
-                    <li>Page : {{page}}</li>
-                    <li>Total Pages : {{total_pages}}</li>
-                    <li>Total Results : {{total_results}}</li>
-                    <li>Reference : {{reference}}</li>
-                    <li>Passages : {{passages}}</li>
-                </u1>
-                <o1> 
-                    <li>Reference : {{new_ref}}</li>
-                    <li>Passages : {{new_cont}}</li>
-                </o1>
-            </div>
+        <div class="centerleft">
+            <u1> 
+                <li>Query : {{user_query}}</li>
+                <li>Page : {{page}}</li>
+                <li>Total Pages : {{total_pages}}</li>
+                <li>Total Results : {{total_results}}</li>
+                <li>Reference : {{reference}}</li>
+                <li>Passages : {{passages}}</li>
+            </u1>
         </div>
     </div>
     {% endif %}

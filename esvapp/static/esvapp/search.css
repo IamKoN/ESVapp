@@ -4,11 +4,31 @@ body{
   margin: 0;
   padding: 0;
   font-size: 14px;
-  color: rgb(50, 40, 30);
+  color:  #003244;
   background: #72abbf url("images/esv_cover.jpg") no-repeat;
   background-attachment: fixed;
   background-position: top center;
   font-family: 'Open Sans', sans-serif;
+}
+
+.active {
+  line-height: 0em
+}
+
+.topleft {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 18px;
+}
+
+.centerleft {
+  position: absolute;
+  left: 1;
+  top: 20%;
+  width: 60%;
+  text-align: 12p;
+  font-size: 18px;
 }
 
 .search {
@@ -24,11 +44,11 @@ body{
   height: 20px;
   border-radius: 5px;
   outline: none;
-  color: #9DBFAF;
+  color:  #003244;
 }
 
 .searchTerm:focus{
-  color: rgb(240, 220, 140);
+  color:  #003244;
 }
 
 .searchButton {
@@ -49,11 +69,11 @@ body{
 .wrap{
   width: 40%;
   position: absolute;
-  top: 15%;
+  top: 14%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 a.esv-crossref-link {
-  color: #72abbf !important;
+  color:  #e0d27f !important;
 }

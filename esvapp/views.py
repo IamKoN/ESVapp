@@ -23,19 +23,22 @@ class SearchView(generic.View):
         try:
             text_obj = get_passage_text(user_query)
             search_obj = get_passage_search(user_query)
-            context = {
-                'no_results_found': False,
-                'user_query': user_query,
-                'total_pages': search_obj['total_pages'],
-                'page': search_obj['page'],
-                'total_results': search_obj['total_results'],
-                'reference': text_obj['canonical'],
-                'passages': text_obj['passages'],
-            }
             all_results = search_obj['results']
-            for result in all_results:
-                context.update(new_cont=result['content'], new_ref=result['reference'])
-            
+            if all_results:
+                context = {
+                    'no_results_found': False,
+                    'user_query': user_query,
+                    'total_pages': search_obj['total_pages'],
+                    'page': search_obj['page'],
+                    'total_results': search_obj['total_results'],
+                }
+                for result in all_results:
+                    context.update(passages=result['content'], reference=result['reference'])
+            else:
+                context = {
+                    'reference': text_obj['canonical'],
+                    'passages': text_obj['passages'][0].strip(),
+                }
             return render(request, 'esvapp/results.html', context=context)
         except NotFound as e:
             if e.status == 404:
