@@ -15,8 +15,11 @@
                 <li>Page : {{page}}</li>
                 <li>Total Pages : {{total_pages}}</li>
                 <li>Total Results : {{total_results}}</li>
-                <li>Reference : {{reference}}</li>
-                <li>Passages : {{passages}}</li>
+            </u1>
+            <u1> 
+                {% for result in all_results %}
+                    <li>{{result}}</li>
+                {% endfor %}
             </u1>
         </div>
     </div>

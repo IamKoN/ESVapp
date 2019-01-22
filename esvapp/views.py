@@ -30,9 +30,13 @@ class SearchView(generic.View):
                     'total_pages': search_obj['total_pages'],
                     'page': search_obj['page'],
                     'total_results': search_obj['total_results'],
+                    'all_results': search_obj['results']
                 }
                 for result in all_results:
-                    context.update(passages=result['content'], reference=result['reference'])
+                    for k, v in result.items():
+                        context[k] = v
+                #for i in range(search_obj['total_results']):
+                #    context[all_results[i]['reference']] = all_results[i]['content']
             else:
                 context = {
                     'reference': text_obj['canonical'],
