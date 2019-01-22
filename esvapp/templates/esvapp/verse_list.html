@@ -1,0 +1,15 @@
+{% extends 'esvapp/base.html' %}
+{% block body_block %}
+  <h1>Verses</h1>
+    {% if curr_verse_list %}
+      <ul>
+      {% for verse in verse_list %}
+        <li>
+          <a href="{{ verse.get_absolute_url }}">{{verse.number}}</a>
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p>No verse found!</p>
+    {% endif %}
+{% endblock %}

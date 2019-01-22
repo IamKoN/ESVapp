@@ -20,8 +20,8 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/esvapp/', permanent=True)),
+    path('search/', RedirectView.as_view(url='/esvapp/search/', permanent=True)),
+    path('browse/', RedirectView.as_view(url='/esvapp/esvbible/', permanent=True)),
     path('admin/', admin.site.urls),
     path('esvapp/', include('esvapp.urls')),
-    #path('search/', RedirectView.as_view(url='/esvapp/search/', permanent=True)),
 ]
-

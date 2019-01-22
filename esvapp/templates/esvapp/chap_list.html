@@ -1,0 +1,15 @@
+{% extends 'esvapp/base.html' %}
+{% block body_block %}
+  <h1>Chapters</h1>
+  {% if curr_chapter_list %}
+    <ul>
+    {% for chapter in curr_chapter_list %}
+      <li>
+        <a href="{{ chapter.get_absolute_url }}">{{chapter.number}}</a>
+      </li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No chapters found!</p>
+  {% endif %}
+{% endblock %}

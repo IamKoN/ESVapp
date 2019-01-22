@@ -1,0 +1,5 @@
+{% extends 'esvapp/base.html' %}
+{% block body_block %}
+    <h1>Verse: {{verse_num}}</h1>
+    <p><strong>Passage:</strong><a href="{% url 'esvapp:verse_detail' verse_num %}">{{ verse.text }}</a></p>
+{% endblock %}

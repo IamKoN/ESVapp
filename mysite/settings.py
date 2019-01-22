@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import django_heroku
-import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,8 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY','-&%4hhs)233(_fdbba23+sda23@16!~nadsasd^fab98x9c_cl#009ad3-91')
-
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY',
+        '-&%4hhs)233(_fdbba23+sda23@16!~nadsasd^fab98x9c_cl#009ad3-91')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv('DJANGO_DEBUG', True))
@@ -76,15 +75,6 @@ TEMPLATES = [
     },
 ]
 
-"""
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = [
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-    #'django.template.loaders.eggs.Loader',
-]
-"""
-
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
@@ -98,11 +88,10 @@ DATABASES = {
 }
 
 # Heroku: Update database configuration from $DATABASE_URL.
-
-#DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
-#db_from_env = dj_database_url.config(conn_max_age=500, ssl_require=True)
-#DATABASES['default'].update(db_from_env)
-
+"""
+DATABASES['default'].update(dj_database_url.config(
+        conn_max_age=600, ssl_require=True))
+"""
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -140,14 +129,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-# The absolute path to the directory where collectstatic will collect static files for deployment.
+# Absolute path to directory where collectstatic will collect static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# The URL to use when referring to static files (where they will be served from)
+# URL to use when referring to where static files are served from
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
-#STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -169,6 +158,12 @@ API_KEY = 'c301f49b5000085fafc0dfb1d696d8855e78a46a'
 API_SEARCH_URL = 'https://api.esv.org/v3/passage/search/'
 API_TEXT_URL = 'https://api.esv.org/v3/passage/text/'
 
+# HTTP request headers
+API_HEADERS = {
+    'Accept': 'application/json',
+    'Authorization': 'Token %s' % API_KEY
+}
+
 API_OPTIONS = {
     'include-passage-references': 'false',
     'include-first-verse-numbers': 'false',
@@ -184,12 +179,7 @@ API_OPTIONS = {
     'indent-poetry': 'false',
     'indent-poetry-lines': '0',
     'indent-declares': '0',
-    'indent-psalm-doxology': '0'
-}
-
-# HTTP request headers
-ESV_HEADER = 'Authorization: Token %s' % API_KEY
-API_HEADERS = {
-    'Accept': 'application/json',
-    'Authorization': 'Token %s' % API_KEY
+    'indent-using': 'tab',
+    'indent-psalm-doxology': '0',
+    'line-length': '0'
 }

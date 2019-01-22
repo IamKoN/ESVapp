@@ -1,0 +1,15 @@
+{% extends 'esvapp/base.html' %}
+{% block body_block %}
+  <h1>Books of the Bible</h1>
+  {% if curr_book_list %}
+    <ul>
+    {% for book in curr_book_list %}
+      <li>
+        <a href="{{ book.get_absolute_url }}">{{ book.name }}</a>
+      </li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No books found!</p>
+  {% endif %}
+{% endblock %}

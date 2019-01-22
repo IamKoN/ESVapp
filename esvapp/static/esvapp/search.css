@@ -1,7 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 body{
-  background: rgb(240, 220, 140) url("images/esv_cover.jpg") no-repeat;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  color: rgb(50, 40, 30);
+  background: #72abbf url("images/esv_cover.jpg") no-repeat;
   background-attachment: fixed;
   background-position: top center;
   font-family: 'Open Sans', sans-serif;
@@ -15,7 +19,7 @@ body{
 .searchTerm {
   float: left;
   width: 100%;
-  border: 3px solid #00B4CC;
+  border: 3px solid rgb(240, 220, 140);
   padding: 5px;
   height: 20px;
   border-radius: 5px;
@@ -24,7 +28,7 @@ body{
 }
 
 .searchTerm:focus{
-  color: #00B4CC;
+  color: rgb(240, 220, 140);
 }
 
 .searchButton {
@@ -32,8 +36,8 @@ body{
   right: -50px;
   width: 40px;
   height: 36px;
-  border: 1px solid #00B4CC;
-  background: #00B4CC;
+  border: 1px solid rgb(240, 220, 140)C;
+  background: rgb(240, 220, 140);
   text-align: center;
   color: #fff;
   border-radius: 5px;
@@ -43,9 +47,13 @@ body{
 
 /*Resize the wrap to see the search bar change!*/
 .wrap{
-  width: 60%;
+  width: 40%;
   position: absolute;
-  top: 5%;
+  top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+a.esv-crossref-link {
+  color: #72abbf !important;
 }
