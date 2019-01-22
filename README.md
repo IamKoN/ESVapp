@@ -1,5 +1,5 @@
 # ESVnote
-===========
+-----------
 
 ESVnote is a simple Django app to take notes that are accessible online.
 
@@ -92,14 +92,14 @@ If you need to migrate a local db to a Heroku db
 4.`Visit https://<your_heroku_app_name>.herokuapp.com/admin` to manage esvnote
 
 ## ToDo
-------------------------
+------------
 1. Add detailed documentation to "docs" directory
 2. Error handling for empty search query
 3. Populate ESV Bible directory in 'Browser'(esvbible) views
 4. Style improvements
 
 Future objectives
----------------------
+------------
 1. Add audio results 
 2. User registration and management
 3. Note/file mangament system for storing text, images, drawing, music, and tags with associated passages
