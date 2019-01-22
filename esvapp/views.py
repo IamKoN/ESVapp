@@ -1,12 +1,12 @@
 import requests
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from mysite.settings import API_HEADERS, API_OPTIONS, API_SEARCH_URL, API_TEXT_URL
 from .models import Book, Chapter, Verse
+
 
 # Views
 def index(request):
@@ -14,11 +14,10 @@ def index(request):
 
 
 class SearchView(generic.View):
-    # context_object_name = 
+    # context_object_name =
     template_name ='esvapp/search.html'
 
-
-    def post(self,request):
+    def post(self, request):
         user_query = request.POST.get('q', '')
         try:
             text_obj = get_passage_text(user_query)
@@ -46,9 +45,8 @@ class SearchView(generic.View):
             else:
                 return HttpResponse('ESV API Error', status=e.status) 
     
-
-    def get(self,request):
-        return render(request, 'esvapp/search.html',{})
+    def get(self, request):
+        return render(request, 'esvapp/search.html', {})
 
 
 def get_passage_search(user_query):
@@ -57,6 +55,7 @@ def get_passage_search(user_query):
     if response.status_code == 404:
         raise NotFound(status=404, msg='Error: Results not found')
     return response.json()
+
 
 def get_passage_text(user_query):
     request_params = dict(q=user_query)
@@ -113,7 +112,6 @@ class VerseList(generic.ListView):
             else:
                 return HttpResponse('ESV API Error', status=e.status) 
   
-
 
 # Error Handling
 class ESVError(Exception):

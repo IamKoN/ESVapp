@@ -1,12 +1,13 @@
 from django.db import models
 from django.urls import reverse
-from django.utils import timezone
+
+
 # Manage database models
 
 class Book(models.Model):
     number = models.PositiveIntegerField(unique=True, db_index=True)
     name = models.CharField(max_length=50)
-    
+
     def __str__(self):
         return self.name
 
@@ -14,7 +15,7 @@ class Book(models.Model):
         return reverse('esvapp:books', args=[self.name])
 
     class Meta:
-        ordering = ['number',]
+        ordering = ['number', ]
 
 
 class Chapter(models.Model):
@@ -29,8 +30,8 @@ class Chapter(models.Model):
         return reverse('esvapp:chapters', args=[str(self.number)])
 
     class Meta:
-        ordering = ['number',]
-        unique_together=(('book','number',),)
+        ordering = ['number', ]
+        unique_together = (('book', 'number', ), )
 
 
 class Verse(models.Model):
@@ -46,5 +47,5 @@ class Verse(models.Model):
         return reverse('esvapp:verses', args=[str(self.number)])
 
     class Meta:
-        ordering = ['number',]
-        unique_together=(('chapter','number'),)
+        ordering = ['number', ]
+        unique_together = (('chapter', 'number'), )
