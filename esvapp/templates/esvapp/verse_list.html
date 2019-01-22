@@ -1,10 +1,12 @@
-{% extends 'esvapp/base.html' %}
+{% extends "base.html" %}
 {% block body_block %}
   <h1>Verses</h1>
+  <form action="{{ chapter.get_absolute_url }}" method="get">         
     {% if curr_verse_list %}
       <ul>
       {% for verse in verse_list %}
         <li>
+          <input type="text" name="verse_num">
           <a href="{{ verse.get_absolute_url }}">{{verse.number}}</a>
         </li>
       {% endfor %}
@@ -12,4 +14,5 @@
     {% else %}
       <p>No verse found!</p>
     {% endif %}
+  </form>
 {% endblock %}

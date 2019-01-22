@@ -4,9 +4,9 @@ from django.urls import reverse
 # Manage database models
 
 class Book(models.Model):
-    name = models.CharField(max_length=50, db_index=True)
-    number = models.IntegerField(unique=True, db_index=True)
-
+    number = models.PositiveIntegerField(unique=True, db_index=True)
+    name = models.CharField(max_length=50)
+    
     def __str__(self):
         return self.name
 
@@ -18,7 +18,7 @@ class Book(models.Model):
 
 
 class Chapter(models.Model):
-    number = models.IntegerField(db_index=True)
+    number = models.PositiveIntegerField(db_index=True)
     book = models.ForeignKey(Book, on_delete=models.CASCADE,
             related_name='chapters')
 
@@ -34,7 +34,7 @@ class Chapter(models.Model):
 
 
 class Verse(models.Model):
-    number = models.IntegerField(db_index=True)
+    number = models.PositiveIntegerField(db_index=True)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE,
             related_name='verses')
     text = models.TextField()
@@ -46,5 +46,5 @@ class Verse(models.Model):
         return reverse('esvapp:verses', args=[str(self.number)])
 
     class Meta:
-        ordering = ['number']
+        ordering = ['number',]
         unique_together=(('chapter','number'),)

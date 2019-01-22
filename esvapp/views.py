@@ -93,13 +93,13 @@ class VerseList(generic.ListView):
 
     def get(self, request):
         verse_num = request.GET.get('vn', 1)
-        text = request.GET.get('q', '')
         try:
-            text_obj = get_passage_text(text)
+            text_obj = get_passage_text(verse_num)
 
             context = {
                 'user_query': text,
                 'verse_num': verse_num,
+                'book_name': text_obj['canonical'].split()[0],
                 'reference': text_obj['canonical'],
                 'passages': text_obj['passages'],
             }
