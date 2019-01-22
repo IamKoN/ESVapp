@@ -97,10 +97,11 @@ If you need to migrate a local db to a Heroku db
 2. Error handling for empty search query
 3. Populate ESV Bible directory in 'Browser'(esvbible) views
 4. Style improvements
+5. Prev/Next page buttons!
 
 Future objectives
 ------------
-1. Add audio results 
+1. Add audio results
 2. User registration and management
 3. Note/file mangament system for storing text, images, drawing, music, and tags with associated passages
 4. More navigation ease

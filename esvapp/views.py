@@ -32,11 +32,6 @@ class SearchView(generic.View):
                     'total_results': search_obj['total_results'],
                     'all_results': search_obj['results']
                 }
-                for result in all_results:
-                    for k, v in result.items():
-                        context[k] = v
-                #for i in range(search_obj['total_results']):
-                #    context[all_results[i]['reference']] = all_results[i]['content']
             else:
                 context = {
                     'reference': text_obj['canonical'],

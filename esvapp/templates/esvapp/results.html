@@ -18,7 +18,9 @@
             </u1>
             <u1> 
                 {% for result in all_results %}
-                    <li>{{result}}</li>
+                    {% for k, v in result.items %}
+                        <li>{{k}}: {{v}}</li>
+                    {% endfor %}
                 {% endfor %}
             </u1>
         </div>
