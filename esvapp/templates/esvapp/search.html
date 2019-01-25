@@ -8,10 +8,12 @@
         <div class="form-group">
             <div class="wrap">
                 <div class="search">
-                    <input type="text" class="searchTerm" name="q" placeholder="Search the ESV Bible">
-                    <button type="submit" class="searchButton">
+                    <input type="search" class="searchTerm" name="q" placeholder="Search the ESV Bible..." required>
+                    <button type="submit" class="searchButton" placeholder="Results per page...">
                         <i class="fa fa-search"></i>
                     </button>
+                    Results per page: <input type="number" name="page-size" min="10" max="100" step="10" value="20" placeholder="Results per page...">
+                    <input type="number" name="page" min="1" step="1" value="1" placeholder="Page to view...">
                 </div>
             </div>
         </div>
