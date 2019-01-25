@@ -94,7 +94,6 @@ If you need to migrate a local db to a Heroku db
 ## ToDo
 ------------
 1. Add detailed documentation to "docs" directory
-2. Error handling for empty search query
 3. Populate ESV Bible directory in 'Browser'(esvbible) views
 4. Style improvements
 5. Prev/Next page buttons!
