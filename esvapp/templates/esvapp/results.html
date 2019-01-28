@@ -11,9 +11,18 @@
     <div class="container">
         <div class="centerleft">               
             <h3>Results for "{{user_query}}" {{total_results}}: </h3>
-            <a href="{% url 'esvapp:search' %}" class="previous round">&#8249;</a>
-            page {{page}} of {{total_pages}}
-            <a href="{% url 'esvapp:search' %}" class="next round">&#8250;</a><br>
+            <form action="{% url 'esvapp:search' %}" method="post">
+                {% csrf_token %}
+                {% if page != 1 %}
+                    <input type="number" name="page" min="1" step="1" value="1">
+                    <a q={{user_query}} page={{page}}-1 href="{% url 'esvapp:search' %}" class="previous round">&#8249;</a>
+                {% endif %}
+                page {{page}} of {{total_pages}}
+                {% if page != total_results %}
+                    <input type="button" name="page" onclick="alert('Hello World!')" value="next">
+                    <a q={{user_query}} page={{page}}+1 class="next round">&#8250;</a>
+                {% endif %}
+            </form>
             <o1> 
                 {% for result in all_results %}
                     {% for k, v in result.items %}

@@ -5,13 +5,9 @@ from django.shortcuts import get_object_or_404, render
 from django.views import generic
 
 from mysite.settings import API_HEADERS, API_OPTIONS, API_SEARCH_URL, API_TEXT_URL
-from .models import Book, Chapter, Verse
 
 
 # Views
-def index(request):
-    return render(request, 'esvapp/index.html')
-
 
 class SearchView(generic.View):
     # context_object_name =
@@ -65,54 +61,8 @@ def get_passage_text(user_query):
     return response.json()
 
 
-class BookList(generic.ListView):
-    template_name = 'esvapp/book_list.html'
-    model = Book
-    context_object_name = 'curr_book_list'
-
-    def get_queryset(self):
-        return Book.objects.all()
-
-
-class ChapterList(generic.ListView):
-    template_name = 'esvapp/chap_list.html'
-    model = Chapter
-    context_object_name = 'curr_chapter_list'
-
-    def get_queryset(self):
-        return Chapter.objects.all()
-
-
-class VerseList(generic.ListView):
-    template_name = 'esvapp/verse_list.html'
-    model = Verse
-    context_object_name = 'curr_verse_list'
-
-    def get_queryset(self):
-        return Verse.objects.all()
-        #return Verse.objects.filter(pk=Verse.number)
-
-    def get(self, request):
-        verse_num = request.GET.get('vn', 1)
-        try:
-            text_obj = get_passage_text(verse_num)
-
-            context = {
-                'user_query': text,
-                'verse_num': verse_num,
-                'book_name': text_obj['canonical'].split()[0],
-                'reference': text_obj['canonical'],
-                'passages': text_obj['passages'],
-            }
-            return render(request, 'esvapp/verse_detail.html', context=context)
-        except NotFound as e:
-            if e.status == 404:
-                return render(request, 'esvapp/verses.html', {'no_results_found': True, 'error_msg': e.msg})
-            else:
-                return HttpResponse('ESV API Error', status=e.status) 
-  
-
 # Error Handling
+
 class ESVError(Exception):
     def __init__(self, status=200, msg=''):
         self.status = status

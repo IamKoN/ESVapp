@@ -6,14 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>ESV Bible Search</title>
         {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'esvapp/index.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'esvapp/search.css' %}">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     
     </head>
     <body class="background">
         <nav class="navbar fixed-top navbar-expand-lg navbar-light ">
-            <a class="navbar-brand mb-0 h1" href="{% url 'esvapp:index' %}">ESV Bible Search</a>
+            <a class="navbar-brand mb-0 h1" href="{% url 'esvapp:search' %}">ESV Bible Search</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -21,7 +21,6 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link active" href="{% url 'admin:index' %}">Admin</a>
                     <a class="nav-item nav-link active" href="{% url 'esvapp:search' %}">Search</a>
-                    <a class="nav-item nav-link active" href="{% url 'esvapp:index' %}">Browse</a>
                 </div>
             </div>
         </nav>

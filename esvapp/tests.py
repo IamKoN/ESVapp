@@ -11,7 +11,7 @@ from django_inlines.inlines import Registry
 from .models import Question
 
 # Manage test cases
-"""
+
 class GetPassageTestCase(TestCase):
     
     def test_get_passage(self):
@@ -69,7 +69,7 @@ class PassageInlineTestCase(TestCase):
         value = '{{ passage gen 1:7 footnotes=off }}'
         OUT = '<div class="esv"><h2>Genesis 1:7 <object type="application/x-shockwave-flash"  data="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001007" width="40" height="12" class="audio"><param name="movie" value="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001007" /><param name="wmode" value="transparent" /></object></h2>\n<div class="esv-text"><p id="p01001007.01-1"><span class="verse-num" id="v01001007-1">7&nbsp;</span>And God made the expanse and separated the waters that were under the expanse from the waters that were above the expanse. And it was so.  (<a href="http://www.esv.org" class="copyright">ESV</a>)</p>\n</div>\n</div>'
         self.assertEqual(self.inlines.process(value), OUT)
-"""
+
 class PassageTemplateTagTestCase(TestCase):
     
     def assert_render(self, expected, template_string, context_dict=None):
