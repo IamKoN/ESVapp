@@ -15,9 +15,10 @@ class SearchView(generic.View):
 
     def post(self, request):
         user_query = request.POST.get('q', '')
+        page_num = request.POST.get('page', '1')
         try:
             text_obj = get_passage_text(user_query)
-            search_obj = get_passage_search(user_query)
+            search_obj = get_passage_search(user_query, page_num)
             all_results = search_obj['results']
             if all_results:
                 context = {
@@ -44,8 +45,8 @@ class SearchView(generic.View):
         return render(request, 'esvapp/search.html', {})
 
 
-def get_passage_search(user_query):
-    request_params = dict(q=user_query)
+def get_passage_search(user_query, page_num):
+    request_params = dict(q=user_query, page=page_num)
     response = requests.get(API_SEARCH_URL, params=request_params, headers=API_HEADERS)
     if response.status_code == 404:
         raise NotFound(status=404, msg='Error: Results not found')

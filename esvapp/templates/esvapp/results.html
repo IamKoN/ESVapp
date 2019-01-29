@@ -13,15 +13,10 @@
             <h3>Results for "{{user_query}}" {{total_results}}: </h3>
             <form action="{% url 'esvapp:search' %}" method="post">
                 {% csrf_token %}
-                {% if page != 1 %}
-                    <input type="number" name="page" min="1" step="1" value="1">
-                    <a q={{user_query}} page={{page}}-1 href="{% url 'esvapp:search' %}" class="previous round">&#8249;</a>
-                {% endif %}
+                <input type="text" name="q" value={{user_query}} readonly><br>
                 page {{page}} of {{total_pages}}
-                {% if page != total_results %}
-                    <input type="button" name="page" onclick="alert('Hello World!')" value="next">
-                    <a q={{user_query}} page={{page}}+1 class="next round">&#8250;</a>
-                {% endif %}
+                <input type="number" name="page" min="1" step="1" value={{page}}>
+                <input type="submit">
             </form>
             <o1> 
                 {% for result in all_results %}
