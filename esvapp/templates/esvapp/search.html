@@ -3,8 +3,7 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'esvapp/search.css' %}">
 <div class="container center-align">
-    <form action="{% url 'esvapp:search' %}" method="post">
-        {% csrf_token %}
+    <form action="{% url 'esvapp:search' %}" method="get">
         <div class="form-group">
             <div class="wrap">
                 <div class="search">
@@ -12,7 +11,6 @@
                     <button type="submit" class="searchButton">
                         <i class="fa fa-search"></i>
                     </button>
-                    Results per page: <input type="number" name="page-size" min="10" max="100" step="10" value="20">
                 </div>
             </div>
         </div>

@@ -10,29 +10,33 @@ from mysite.settings import API_HEADERS, API_OPTIONS, API_SEARCH_URL, API_TEXT_U
 # Views
 
 class SearchView(generic.View):
-    # context_object_name =
-    template_name ='esvapp/search.html'
 
-    def post(self, request):
-        user_query = request.POST.get('q', '')
-        page_num = request.POST.get('page', '1')
+    def get(self, request):
+        user_query = request.GET.get('q', ' ')
+        page_num = request.GET.get('page', '1')
+        page_size = request.GET.get('page-size', '20')
         try:
             text_obj = get_passage_text(user_query)
-            search_obj = get_passage_search(user_query, page_num)
-            all_results = search_obj['results']
-            if all_results:
+            search_obj = get_passage_search(user_query, page_num, page_size)
+            if search_obj['results']:
                 context = {
                     'no_results_found': False,
                     'user_query': user_query,
                     'total_pages': search_obj['total_pages'],
                     'page': search_obj['page'],
                     'total_results': search_obj['total_results'],
-                    'all_results': search_obj['results']
+                    'all_results': search_obj['results'],
+                    'page_size': page_size,
+                }
+            elif text_obj['passages']:
+                context = {
+                    'no_results_found': False,
+                    'reference': text_obj['canonical'],
+                    'passages': text_obj['passages'][0].strip(),
                 }
             else:
                 context = {
-                    'reference': text_obj['canonical'],
-                    'passages': text_obj['passages'][0].strip(),
+                    'no_results_found': True,
                 }
             return render(request, 'esvapp/results.html', context=context)
         except NotFound as e:
@@ -41,12 +45,17 @@ class SearchView(generic.View):
             else:
                 return HttpResponse('ESV API Error', status=e.status) 
     
-    def get(self, request):
+    def post(self, request):
         return render(request, 'esvapp/search.html', {})
 
 
-def get_passage_search(user_query, page_num):
-    request_params = dict(q=user_query, page=page_num)
+def get_passage_search(user_query, page_num, page_size):
+    request_params = {
+        'q': user_query,
+        'page':page_num,
+        'page-size':page_size,
+    }
+
     response = requests.get(API_SEARCH_URL, params=request_params, headers=API_HEADERS)
     if response.status_code == 404:
         raise NotFound(status=404, msg='Error: Results not found')

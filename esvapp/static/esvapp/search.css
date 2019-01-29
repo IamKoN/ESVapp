@@ -6,7 +6,7 @@ body{
   font-size: 14px;
   color:  #003244;
   background: white url("images/esv_logo_wide.jpg") no-repeat;
-  background-attachment: fixed;
+  background-attachment: scroll;
   background-position-y: 10%;
   background-position-x: 50%;
   font-family: 'Open Sans', sans-serif;

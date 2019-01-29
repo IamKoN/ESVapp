@@ -10,18 +10,20 @@
     {% else %}
     <div class="container">
         <div class="centerleft">               
-            <h3>Results for "{{user_query}}" {{total_results}}: </h3>
-            <form action="{% url 'esvapp:search' %}" method="post">
-                {% csrf_token %}
+            <h3>{{total_results}} results for "{{user_query}}" : </h3>
+            <form action="{% url 'esvapp:search' %}" method="get">
                 <input type="text" name="q" value={{user_query}} readonly><br>
-                page {{page}} of {{total_pages}}
+                results per page
+                <input type="number" name="page-size" min="10" max="100" step="10" value={{page_size}}><br>
+                page
                 <input type="number" name="page" min="1" step="1" value={{page}}>
+                of {{total_pages}}
                 <input type="submit">
             </form>
             <o1> 
                 {% for result in all_results %}
                     {% for k, v in result.items %}
-                        <li>{{k}}: {{v}}</li>
+                        {{v}}<br>
                     {% endfor %}
                 {% endfor %}
             </o1>
