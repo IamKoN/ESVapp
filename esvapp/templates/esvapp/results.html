@@ -10,7 +10,7 @@
     {% else %}
     <div class="container">
         <div class="centerleft">               
-            <h3>{{total_results}} results for "{{user_query}}" : </h3>
+            <h3>{{total_results}} results for "{{user_query}}" </h3>
             <form action="{% url 'esvapp:search' %}" method="get">
                 <input type="text" name="q" value={{user_query}} readonly><br>
                 results per page
@@ -23,8 +23,8 @@
             <o1> 
                 {% for result in all_results %}
                     {% for k, v in result.items %}
-                        {{v}}<br>
-                    {% endfor %}
+                        {{v}}
+                    {% endfor %}<br>
                 {% endfor %}
             </o1>
         </div>

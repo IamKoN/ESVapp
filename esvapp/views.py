@@ -18,6 +18,9 @@ class SearchView(generic.View):
         try:
             text_obj = get_passage_text(user_query)
             search_obj = get_passage_search(user_query, page_num, page_size)
+            context = {
+                    'no_results_found': True,
+            }
             if search_obj['results']:
                 context = {
                     'no_results_found': False,
@@ -35,13 +38,11 @@ class SearchView(generic.View):
                     'passages': text_obj['passages'][0].strip(),
                 }
             else:
-                context = {
-                    'no_results_found': True,
-                }
+                raise NotFound(status=404, msg='Error: Passage not found')
             return render(request, 'esvapp/results.html', context=context)
         except NotFound as e:
             if e.status == 404:
-                return render(request, 'esvapp/results.html', {'no_results_found': True, 'error_msg': e.msg})
+                return render(request, 'esvapp/results.html', {'error_msg': e.msg})
             else:
                 return HttpResponse('ESV API Error', status=e.status) 
     
