@@ -1,0 +1,81 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  color:  #003244;
+  background: white url("images/esv_logo_wide.jpg") no-repeat;
+  background-attachment: scroll;
+  background-position-y: 15%;
+  background-position-x: 50%;
+  font-family: 'Open Sans', sans-serif;
+  background-size: auto;
+  height: auto;
+}
+
+.esvLogo {
+  position: absolute;
+  left: 0%;
+  top: 50%;
+  height: 80%;
+  width: 80%;
+}
+
+.centerleft {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  bottom: 10%;
+  width: 80%;
+  text-align: 12p;
+  font-size: 16px;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #e0d27f;
+  padding: 5px;
+  height: 40px;
+  border-radius: 5px;
+  outline: none;
+  color:  black;
+}
+
+.searchTerm:focus{
+  color:  black;
+}
+
+.searchButton {
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  height: 40px;
+  width: 45px;
+  color: white;
+  cursor: pointer;
+  background: #e0d27f;
+  border: 3px solid #e0d27f;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.search {
+  position: absolute;
+  width: 300px;
+  height: 35px;
+  top: 10%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+}
+
+/*Resize the wrap to change the search bar*/
+.wrap{
+  position: absolute;
+  width: 300px;
+  height: 35px;
+  top: 10%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+}

@@ -60,7 +60,7 @@ To delpoy to Heroku on Windows 10
 2. Install postgreSQL locally and execute `CREATE DATABASE <your_local_db_name>; and USE <your_local_db_name>;`
 
 1. Add to your root directory: 'Procfile' which has    
-       `web: gunicorn mysite.wsgi --log-file -`
+       `web: gunicorn main_website.wsgi --log-file -`
     
 1. Then add a 'requirements.txt' using '$ pip freeze > requirements.txt'
     
