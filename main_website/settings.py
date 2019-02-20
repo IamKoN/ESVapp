@@ -227,6 +227,10 @@ else:
     # live keys
     STRIPE_PUBLISHABLE_KEY = 'pk_test_KA6Cf0oC5c235Qa63SAZrrAF'
     STRIPE_SECRET_KEY = 'sk_test_MANe2GKDofSF7dTiS7rsvHvg'
+    BT_ENVIRONMENT='sandbox'
+    BT_MERCHANT_ID='h7bvbc2hfv38qzcv'
+    BT_PUBLIC_KEY='z6m9n9x4429njpq7'
+    BT_PRIVATE_KEY='def748a813a207e7db6b0f8d2d6ffcd5'
 
 # Django AllAuth Settings
 
