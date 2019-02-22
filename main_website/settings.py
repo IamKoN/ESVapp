@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'stripe',
 
     # added Crossway demo apps
+    'home',
     'accounts',
     'products',
     'shopping_cart',
@@ -129,8 +130,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
-
+LOGIN_REDIRECT_URL = '/products'
 
 # Add to test email:
 SEND_GRID_API_KEY = ''
@@ -240,4 +240,3 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/products'

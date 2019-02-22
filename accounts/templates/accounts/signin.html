@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block signin %}
+
+<form id="login-form" action="." method="post">
+  <fieldset>
+    <legend>Sign in</legend>
+    <section>
+      <span>or <a href="/profiles/signup/">create an account</a></span>
+    </section>
+      <p>
+        <label for="id_email">Email:</label>
+        <input type="email" name="email" autofocus="autofocus" placeholder="Email" max_length="255" id="id_email">
+      </p>
+      <p>
+        <label for="id_password">Password:</label>
+        <input type="password" name="password" placeholder="Password" id="id_password">
+        <input type="hidden" name="service" value="https://www.esv.org/cas/login/" id="id_service">
+      </p>
+      <table style="border: none; width:100%;"></table>
+      <a href="/account/password/reset/" class="forgot_password">Forgot your password?</a>
+      <p class="signin-row"><input type="submit" value="Sign in"></p>
+  </fieldset>
+</form>
+
+{% endblock signin %}

@@ -1,18 +1,21 @@
 # ESVnote
 -----------
 
-ESVnote is a simple Django app to take notes that are accessible online.
+ESVnote is a web app designed to display the fundamentals of the Django framework within the context of a Crossway demo website.
 
 ## Overview
 ------------
 The main features that have currently been implemented are:
 
-* Simple ,easy to use nav bar
+* Easy-use nav bar
 * Search the ESV Bible using [Crossway's](https://www.crossway.org/) awesome [ESV API](https://api.esv.org/)
    * search any term, like `eden`, and see passages that contains that term
    * seach for a specific passage reference, such as `John+3:16`
    * the API can handle many variations and abbreviations
-* Browse the ESV Bible specific books, chapters, verses, and (*comming soon) contextual information.
+* Site 'admin' manage user accounts, products for sale, site settings and more
+* Site 'users' can register for an account, login, shop the store and checkout using [Stripe](https://stripe.com/docs/api) or [Braintree](https://developers.braintreepayments.com/) APIs, and view order history
+* *Comming soon*
+    * Browse the ESV Bible specific books, chapters, verses, and contextual information.
 
 Note: I have deliberately chosen not to redact this workflow's approved API key, and kept it unhidden in the source code. Your use of the API key is subject to the conditions laid out in the [ESV API usage guidelines](https://api.esv.org/#copyright).
 

@@ -52,8 +52,10 @@ class SearchView(generic.View):
                 return HttpResponse('ESV API Error', status=e.status) 
     
     def post(self, request):
-        return render(request, 'base.html', {})
+        return render(request, 'home.html', {})
 
+
+# View Functions
 
 def get_passage_search(user_query, page_num, page_size):
     request_params = {

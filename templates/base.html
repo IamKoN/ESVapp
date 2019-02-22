@@ -11,12 +11,13 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
         {% block head %}{% endblock head %}
+
         {% block style %}{% endblock style %}
         
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-            <a class="navbar-brand mb-0 h1" href="{% url 'esv_search:search' %}">Crossway Demo</a>
+            <a class="navbar-brand mb-0 h1" href="/">Crossway Demo</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
             </button>
@@ -24,11 +25,11 @@
                     <ul class="navbar-nav mr-auto">   
 
                     <li class="nav-item active">
-                        <a class="nav-item nav-link active" href="/">Home
+                        <a class="nav-item nav-link active" href="{% url 'home:home' %}">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                             <a class="nav-item nav-link active" href="{% url 'products:product-list' %}">Shop</a>
                     </li>
                     <li class="nav-item">
@@ -43,12 +44,17 @@
                 </form>
             </div>                    
         </nav>
-        
-        {% block result %}{% endblock %}
+
+        {% block home %}{% endblock home %}
+        {% block result %}{% endblock result %}
+        {% block signin %}{% endblock signin %}
+        {% block signup %}{% endblock signup %}
         {% include 'messages.html' %}
+
         <div class="container">
             {% block content %}{% endblock content %}
         </div>
+
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>

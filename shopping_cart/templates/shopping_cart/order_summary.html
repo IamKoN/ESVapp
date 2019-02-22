@@ -23,20 +23,19 @@
           </td>
           <td>{{ item.product.price }}</td>
         </tr>
-      {% empty %}
+        {% empty %}
         <tr>
           <td colspan= 3> You have not added any items yet.</td>
         </tr>
       {% endfor %}
       <tr>
         {% if order.get_cart_total != None %}
-        <td colspan=2>
-          <strong class="pull-right">Order Total:</strong>
-        </td>
-        
-        <td colspan= 1>
-          $<strong>{{ order.get_cart_total }}</strong>
-        </td>
+          <td colspan=2>
+            <strong class="pull-right">Order Total:</strong>
+          </td>
+          <td colspan= 1>
+            $<strong>{{ order.get_cart_total }}</strong>
+          </td>
         {% endif %}
       </tr>
       <tr>
@@ -52,10 +51,9 @@
         </td>
       </tr>
     </table>
-     
    </div>
  </section>
-{% endblock %}
+{% endblock content %}
 
 {% block scripts %}
   {{ block.super }}

@@ -11,4 +11,10 @@ def my_profile(request):
 		'my_orders': my_orders
 	}
 
-	return render(request, "profile.html", context)
+	return render(request, "accounts/profile.html")
+
+def signin(request):
+	return render(request, "accounts/signin.html")
+
+def signup(request):
+	return render(request, "accounts/signup.html")

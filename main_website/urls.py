@@ -21,15 +21,14 @@ from django.urls import include, path
 from django.views.generic import RedirectView
 
 urlpatterns = [
+    path('home/', include('home.urls', namespace='home')),
+    path('', RedirectView.as_view(url='/home/', permanent=True)),
     path('admin/', admin.site.urls),
-    path('esv_search/', include('esv_search.urls')),
-    path('profiles/', include('accounts.urls', namespace='accounts')),
-    path('products/', include('products.urls', namespace='products')),
-    path('cart/', include('shopping_cart.urls', namespace='shopping_cart')),
     path('accounts/', include('allauth.urls')),
-
-    path('', RedirectView.as_view(url='/esv_search/', permanent=True)),
-    path('search/', RedirectView.as_view(url='/esv_search/search/', permanent=True))
+    path('profiles/', include('accounts.urls', namespace='accounts')),
+    path('cart/', include('shopping_cart.urls', namespace='shopping_cart')),
+    path('products/', include('products.urls', namespace='products')),
+    path('esv_search/', include('esv_search.urls', namespace='esv_search'))
 ]
 
 if settings.DEBUG:
