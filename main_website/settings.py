@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'stripe',
 
     # added Crossway demo apps
-    'home',
     'profiles',
     'products',
     'shopping_cart',
@@ -131,7 +130,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = '/'
 
 # Add to test email:
 SEND_GRID_API_KEY = ''
@@ -142,8 +141,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = ''
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Static files (CSS, JavaScript, Images)
@@ -174,13 +173,18 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Security
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Heroku Settings for Django
-"""
-# Update database configuration from $DATABASE_URL.
 
-DATABASES['default'].update(dj_database_url.config(
-        conn_max_age=600, ssl_require=True))
-"""
+
+# Django AllAuth Settings
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1
+
+# Heroku Settings for Django
 
 django_heroku.settings(locals())
 
@@ -233,12 +237,3 @@ else:
     BT_MERCHANT_ID='h7bvbc2hfv38qzcv'
     BT_PUBLIC_KEY='z6m9n9x4429njpq7'
     BT_PRIVATE_KEY='def748a813a207e7db6b0f8d2d6ffcd5'
-
-# Django AllAuth Settings
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
-
-SITE_ID = 1

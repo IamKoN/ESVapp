@@ -5,5 +5,6 @@ from . import views
 app_name = 'esv_search'
 
 urlpatterns = [
-    path('', views.SearchView.as_view(), name='search')
+    path('', views.index, name='index'),
+    path('search', views.SearchView.as_view(), name='search')
 ]

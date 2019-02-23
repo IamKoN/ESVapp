@@ -10,6 +10,9 @@ from main_website.settings import API_HEADERS, API_OPTIONS, API_SEARCH_URL, API_
 # Views
 # ======================================================================
 
+def index(request):
+    return render(request, 'esv_search/index.html')
+
 class SearchView(generic.View):
 
     def get(self, request):
@@ -51,7 +54,7 @@ class SearchView(generic.View):
                 return HttpResponse('ESV API Error', status=e.status) 
     
     def post(self, request):
-        return render(request, 'home/index.html')
+        return render(request, 'esv_search/index.html')
 
 
 # View Functions

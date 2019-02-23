@@ -20,17 +20,20 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from django.views.generic import RedirectView
+from esv_search import views
 
 
 urlpatterns = [
-    path('home/', include('home.urls', namespace='home')),
-    path('admin/doc/', include('django.contrib.admindocs.urls')),
-    path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
+    # path('', views.index, name='home'),
+    path('admin/doc/', include('django.contrib.admindocs.urls'), name='docs'),
+    path('admin/', admin.site.urls, name='admin'),
+    # path('accounts/', include('allauth.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('profiles/', include('profiles.urls', namespace='profiles')),
     path('cart/', include('shopping_cart.urls', namespace='shopping_cart')),
     path('products/', include('products.urls', namespace='products')),
-    path('esv_search/', include('esv_search.urls', namespace='esv_search'))
+    path('esv_search/', include('esv_search.urls', namespace='esv_search')),
+    path('', RedirectView.as_view(url='/', permanent=True))
 ]
 
 if settings.DEBUG:
