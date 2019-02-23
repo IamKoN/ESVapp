@@ -9,7 +9,7 @@ from .models import Product
 
 def product_list(request):
     object_list = Product.objects.all()
-    filtered_orders = Order.objects.filter(owner=request.user.profile, is_ordered=False)
+    filtered_orders = Order.objects.filter(is_ordered=False) # owner=request.user.profile
     current_order_products = []
     if filtered_orders.exists():
     	user_order = filtered_orders[0]

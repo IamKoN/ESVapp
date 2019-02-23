@@ -17,15 +17,17 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from django.views.generic import RedirectView
 
+
 urlpatterns = [
     path('home/', include('home.urls', namespace='home')),
-    path('', RedirectView.as_view(url='/home/', permanent=True)),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('profiles/', include('accounts.urls', namespace='accounts')),
+    path('profiles/', include('profiles.urls', namespace='profiles')),
     path('cart/', include('shopping_cart.urls', namespace='shopping_cart')),
     path('products/', include('products.urls', namespace='products')),
     path('esv_search/', include('esv_search.urls', namespace='esv_search'))

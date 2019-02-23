@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-from accounts.models import Profile
+from profiles.models import Profile
 from products.models import Product
 
 
@@ -46,11 +46,3 @@ class Transaction(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
-
-
-
-
-
-
-
-        

@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
-{% block signin %}
+{% block login %}
 
-<form id="login-form" action="." method="post">
+<form id="login-form" action="accounts/login" method="post">
+  {% csrf_token %}
   <fieldset>
     <legend>Sign in</legend>
     <section>
@@ -23,4 +24,4 @@
   </fieldset>
 </form>
 
-{% endblock signin %}
+{% endblock login %}

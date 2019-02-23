@@ -1,6 +1,6 @@
 include LICENSE
 include README
-recursive-include accounts/templates *
+recursive-include profiles/templates *
 recursive-include esv_search/static *
 recursive-include esv_search/templates *
 recursive-include home/templates *

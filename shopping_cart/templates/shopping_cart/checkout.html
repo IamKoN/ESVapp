@@ -16,7 +16,6 @@
       position: relative;
       width: 700px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-
     }
   </style>
 </head>
@@ -27,9 +26,9 @@
     <section>
       <div class="row" id="tablerow">
         <div class="col-md-4 col-xs-12">
-          <div class="panel panel-primary">
+          <div class="panel">
             <div class="panel-body">
-              <h5>Enter Voucher Code Below<br><small>If multiple, separate each with comma</small></h5>
+              <h5>Enter Discount Code Below<br><small>If multiple, separate each with comma</small></h5>
               <div>
                 <form action="." method="post">
                   {% csrf_token %}
@@ -37,7 +36,7 @@
                   <input type="hidden"  name="order_id" value="{{ order.id }}">
                   <br>
                   <span>
-                    <input type="submit" class="btn btn-warning pull-right" value="Apply Voucher"> 
+                    <input type="submit" class="btn btn-warning pull-right" value="Apply Discount"> 
                   </span>
                 </form>
               </div>
@@ -90,9 +89,9 @@
             <div id="card-errors" role="alert"></div>
           </div>
           <input type="hidden" id="nonce" name="payment_method_nonce" />
+          <br><button class="btn btn-primary my-2 my-sm-0" >Submit Payment</button>
         </div>
       </div>
-      <br><button class="btn btn-primary my-2 my-sm-0" >Submit Payment</button>
     </form>
   </div>
   <div id="stripe-token-handler" class="is-hidden">
@@ -101,9 +100,7 @@
 
 <!-- script for the stripe form -->
 <script src="{% static 'js/checkout.js' %}"></script>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-
 <script src="https://js.braintreegateway.com/web/dropin/1.13.0/js/dropin.min.js"></script>
 <script>
   var form = document.querySelector('#payment-form');
@@ -112,25 +109,23 @@
   braintree.dropin.create({
     authorization: client_token,
     container: '#bt-dropin',
-    paypal: {
-      flow: 'vault'
-    }
-  }, function (createErr, instance) {
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
+    paypal: {flow: 'vault'}
+    }, function (createErr, instance) {
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        instance.requestPaymentMethod(function (err, payload) {
+          if (err) {
+            console.log('Error', err);
+            return;
+          }
 
-      instance.requestPaymentMethod(function (err, payload) {
-        if (err) {
-          console.log('Error', err);
-          return;
-        }
-
-        // Add the nonce to the form and submit
-        document.querySelector('#nonce').value = payload.nonce;
-        form.submit();
+          // Add the nonce to the form and submit
+          document.querySelector('#nonce').value = payload.nonce;
+          form.submit();
+        });
       });
-    });
-  });
+    }
+  );
 </script>
 
 <!-- script for toggling display of the form -->

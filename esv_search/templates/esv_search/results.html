@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
-{% block result %}
+{% block esv_search_result %}
     {% if no_results_found %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="container"><br>
         <strong>{{error_msg}}</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
     </div>
     {% else %}
-    <div class="container">             
+    <div class="container"><br>
+        {% if all_results %}
         <h4>{{total_results}} results for "{{user_query}}" </h4>
         <form action="{% url 'esv_search:search' %}" method="get">
             <input type="hidden" name="q" value={{user_query}}><br>
@@ -16,11 +14,10 @@
                 <label for="selectResultsPerPage">Results per Page</label>
                 <select class="form-control" id="selectResultsPerPage" name="page-size" value={{page_size}}>
                     <option selected>{{page_size}}</option>
+                    <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
-                    <option value="30">30</option>
                     <option value="40">40</option>
-                    <option value="50">50</option>
                 </select>
             </div>
             <div class="form-group">
@@ -31,16 +28,20 @@
                         <option value={{page}}>{{page}}</option>
                     {% endfor %}
                 </select>
-            </div>
-            <br><input type="submit" class="btn btn-primary my-2 my-sm-0">
-        </form>
+            </div><br>
+            <input type="submit" class="btn btn-primary my-2 my-sm-0">
+        </form><br>
         <ul class="list-group">
             {% for result in all_results %}
-                {% for k, v in result.items %}
-                    <li class="list-group-item">{{v}}</li>
-                {% endfor %}<br>
+                    <li class="list-group-item" ><strong>{{result.reference}} - </strong>{{result.content}}</li><br>
             {% endfor %}
         </ul>
+        {% else %}
+        <h4>{{total_results}} results for "{{user_query}}" </h4>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>{{reference}} - </strong>{{passage}}</li>
+        </ul>
+        {% endif %}
     </div>
     {% endif %}
 {% endblock %}

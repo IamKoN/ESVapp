@@ -1,18 +1,23 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 
-from accounts.models import Profile
-from products.models import Product
-
-from shopping_cart.extras import generate_order_id, transact, generate_client_token
-from shopping_cart.models import OrderItem, Order, Transaction
-
+from datetime import date
 import datetime
+import random
+import string
+
+import braintree
 import stripe
 
+from profiles.models import Profile
+from products.models import Product
+from shopping_cart.models import OrderItem, Order, Transaction
+
+
+# Manage Views
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -142,22 +147,48 @@ def update_transaction_records(request, token):
     user_profile.save()
 
     
-    # create a transaction
+    # create and save a transaction
     transaction = Transaction(profile=request.user.profile,
                             token=token,
                             order_id=order_to_purchase.id,
                             amount=order_to_purchase.get_cart_total(),
                             success=True)
-    # save the transcation (otherwise doesn't exist)
     transaction.save()
 
-
-    # send an email to the customer
-    # look at tutorial on how to send emails with sendgrid
+    # send an email to the customer: look at tutorial on how to send emails with sendgrid
     messages.info(request, "Thank you! Your purchase was successful!")
-    return redirect(reverse('accounts:my_profile'))
+    return redirect(reverse('profiles:my_profile'))
 
 
 def success(request, **kwargs):
-    # a view signifying the transcation was successful
+    # Indicate transcation was successful
     return render(request, 'shopping_cart/purchase_success.html', {})
+
+
+# View Functions
+
+gateway = braintree.BraintreeGateway(
+    braintree.Configuration(
+        environment=settings.BT_ENVIRONMENT,
+        merchant_id=settings.BT_MERCHANT_ID,
+        public_key=settings.BT_PUBLIC_KEY,
+        private_key=settings.BT_PRIVATE_KEY
+    )
+)
+
+def generate_order_id():
+    date_str = date.today().strftime('%Y%m%d')[2:] + str(datetime.datetime.now().second)
+    rand_str = "".join([random.choice(string.digits) for count in range(3)])
+    return date_str + rand_str
+
+
+def generate_client_token():
+    return gateway.client_token.generate()
+
+
+def transact(options):
+    return gateway.transaction.sale(options)
+
+
+def find_transaction(id):
+    return gateway.transaction.find(id)

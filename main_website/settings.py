@@ -37,6 +37,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -52,10 +53,10 @@ INSTALLED_APPS = [
 
     # added Crossway demo apps
     'home',
-    'accounts',
+    'profiles',
     'products',
     'shopping_cart',
-    'esv_search.apps.esv_searchConfig'
+    'esv_search'
     
 ]
 
@@ -130,7 +131,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/products'
+LOGIN_REDIRECT_URL = '/profiles/profile'
 
 # Add to test email:
 SEND_GRID_API_KEY = ''

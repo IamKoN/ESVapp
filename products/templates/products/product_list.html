@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block product_list %}
     {{ message }}
     <table class="table table-bordered table-hover">
-        
         <thead>
-          <tr>
-            <th scope="col">Item</th>
-            <th scope="col">Price</th>
-            <th scope="col">Options</th>
-          </tr>
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Price</th>
+                <th scope="col">Options</th>
+            </tr>
         </thead>
         <tbody>
             {% for object in object_list %}
@@ -28,5 +27,5 @@
                 </tr>
             {%endfor%}        
         </tbody>
-      </table>
-{% endblock content %}
+    </table>
+{% endblock product_list %}

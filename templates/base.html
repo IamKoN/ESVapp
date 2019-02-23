@@ -9,15 +9,10 @@
         <link rel="stylesheet" type="text/css" href="{% static 'esv_search/css/search.css' %}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
-        {% block head %}{% endblock head %}
-
-        {% block style %}{% endblock style %}
-        
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-            <a class="navbar-brand mb-0 h1" href="/">Crossway Demo</a>
+            <a class="navbar-brand mb-0 h1" href="{% url 'home:home' %}">Crossway Demo</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
             </button>
@@ -33,7 +28,7 @@
                             <a class="nav-item nav-link active" href="{% url 'products:product-list' %}">Shop</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-item nav-link active" href="{% url 'accounts:my_profile' %}">Account</a>
+                            <a class="nav-item nav-link active" href="accounts/login">Account</a>
                     </li>
                 </ul> 
                 <form class="form-inline" action="{% url 'esv_search:search' %}" method="get">
@@ -45,14 +40,20 @@
             </div>                    
         </nav>
 
-        {% block home %}{% endblock home %}
-        {% block result %}{% endblock result %}
-        {% block signin %}{% endblock signin %}
-        {% block signup %}{% endblock signup %}
+
+        {% block esv_search_result %}{% endblock esv_search_result %}
+
         {% include 'messages.html' %}
 
         <div class="container">
             {% block content %}{% endblock content %}
+            {% block home %}{% endblock home %}
+            {% block product_list %}{% endblock product_list %}
+            {% block order_summary %}{% endblock order_summary %}
+            {% block checkout_success %}{% endblock checkout_success %}
+            {% block signup %}{% endblock signup %}
+            {% block login %}{% endblock login %}
+            {% block order_history %}{% endblock order_history %}
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -22,8 +22,8 @@ def post_save_profile_create(sender, instance, created, *args, **kwargs):
     user_profile, created = Profile.objects.get_or_create(user=instance)
 
     if user_profile.stripe_id is None or user_profile.stripe_id == '':
-        new_stripe_id = stripe.Customer.create(email=instance.email)
-        user_profile.stripe_id = new_stripe_id['id']
+        new_stripe_customer = stripe.Customer.create(email=instance.email)
+        user_profile.stripe_id = new_stripe_customer['id']
         user_profile.save()
 
 
