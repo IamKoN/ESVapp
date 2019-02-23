@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block signin %}
+{% block content %}
 
 <form id="login-form" action="accounts/login" method="post">
   {% csrf_token %}
@@ -24,4 +24,4 @@
   </fieldset>
 </form>
 
-{% endblock signin %}
+{% endblock content %}

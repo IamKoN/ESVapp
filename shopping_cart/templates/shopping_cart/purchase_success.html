@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block checkout_success %}
+{% block content %}
     <h1>Thank you for your purchase!</h1>
     <a href="{% url 'products:product-list' %}">Continue shopping</a>
-{% endblock checkout_success %}
+{% endblock content %}

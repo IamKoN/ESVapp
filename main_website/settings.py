@@ -131,7 +131,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/profiles/profile'
+LOGIN_REDIRECT_URL = '/home'
 
 # Add to test email:
 SEND_GRID_API_KEY = ''
@@ -142,8 +142,9 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = ''
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
