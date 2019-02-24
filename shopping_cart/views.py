@@ -120,7 +120,7 @@ def checkout(request, **kwargs):
         'STRIPE_PUBLISHABLE_KEY': publishKey
     }
 
-    return render(request, 'shopping_cart/checkout.html', context)
+    return render(request, 'shopping_cart/checkout_old.html', context)
 
 
 @login_required()
