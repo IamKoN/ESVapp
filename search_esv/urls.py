@@ -2,7 +2,7 @@ from django.urls import path
 
 from . import views
 
-app_name = 'esv_search'
+app_name = 'search_esv'
 
 urlpatterns = [
     path('', views.index, name='index'),

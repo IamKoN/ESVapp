@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'profiles',
     'products',
     'shopping_cart',
-    'esv_search'
+    'search_esv'
     
 ]
 

@@ -11,7 +11,7 @@ from main_website.settings import API_HEADERS, API_OPTIONS, API_SEARCH_URL, API_
 # ======================================================================
 
 def index(request):
-    return render(request, 'esv_search/index.html')
+    return render(request, 'search_esv/index.html')
 
 class SearchView(generic.View):
 
@@ -46,15 +46,15 @@ class SearchView(generic.View):
                 }
             else:
                 raise NotFound(status=404, msg='Sorry, no passage(s) found')
-            return render(request, 'esv_search/results.html', context=context)
+            return render(request, 'search_esv/results.html', context=context)
         except NotFound as e:
             if e.status == 404:
-                return render(request, 'esv_search/results.html', {'no_results_found': True,'error_msg': e.msg})
+                return render(request, 'search_esv/results.html', {'no_results_found': True,'error_msg': e.msg})
             else:
                 return HttpResponse('ESV API Error', status=e.status) 
     
     def post(self, request):
-        return render(request, 'esv_search/index.html')
+        return render(request, 'search_esv/index.html')
 
 
 # View Functions

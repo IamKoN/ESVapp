@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>CW Demo Site</title>
         {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'esv_search/css/search.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'search_esv/css/search.css' %}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     </head>
@@ -20,7 +20,7 @@
                     <ul class="navbar-nav mr-auto">
 
                     <li class="nav-item active">
-                        <a class="nav-item nav-link active" href="{% url 'esv_search:index' %}">Home
+                        <a class="nav-item nav-link active" href="{% url 'search_esv:index' %}">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -29,14 +29,14 @@
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-item nav-link active" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+                            <a class="nav-item nav-link active" href="{% url 'account_logout'%}?next={{request.path}}">Logout</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-item nav-link active" href="{% url 'profiles:my_profile' %}">Welcome, {{ user.get_username }}</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-item nav-link active" href="{% url 'login'%}?next={{request.path}}">Login</a>   
+                            <a class="nav-item nav-link active" href="{% url 'account_login'%}?next={{request.path}}">Login</a>   
                         </li>
                     {% endif %} 
                     {% if user.is_staff %}
@@ -48,7 +48,7 @@
                         </li>
                     {% endif %}
                 </ul> 
-                <form class="form-inline" action="{% url 'esv_search:search' %}" method="get">
+                <form class="form-inline" action="{% url 'search_esv:search' %}" method="get">
                     <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search ESV Bible" aria-label="Search" required>
                     <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
                         <i class="fa fa-search"></i>
@@ -59,8 +59,6 @@
         <ul class="sidebar-nav">
 
         </ul>
-
-        {% block esv_search_result %}{% endblock esv_search_result %}
 
         {% include 'messages.html' %}
 

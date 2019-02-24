@@ -2,60 +2,46 @@
 
 {% block content %}
 
-<form id="login-form" action="accounts/login" method="post">
-  {% csrf_token %}
-  <fieldset>
-    <legend>Sign in</legend>
-    <section>
-      <span>or <a href="/profiles/signup/">create an account</a></span>
-    </section>
-      <p>
-        <label for="id_email">Email:</label>
-        <input type="email" name="email" autofocus="autofocus" placeholder="Email" max_length="255" id="id_email">
-      </p>
-      <p>
-        <label for="id_password">Password:</label>
-        <input type="password" name="password" placeholder="Password" id="id_password">
-        <input type="hidden" name="service" value="https://www.esv.org/cas/login/" id="id_service">
-      </p>
-      <table style="border: none; width:100%;"></table>
-      <a href="/account/password/reset/" class="forgot_password">Forgot your password?</a>
-      <p class="signin-row"><input type="submit" value="Sign in"></p>
-  </fieldset>
-</form>
-
-<p>====================================================</p>
-
 {% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
+  <p>Email and password did not match, please try again.</p>
 {% endif %}
 
-{% if next %}
-  {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-  {% else %}
-    <p>Please login to see this page.</p>
-  {% endif %}
-{% endif %}
-
-<form method="post" action="{% url 'login' %}">
+<form id="login-form" action="{% url 'account_login' %}" method="post">
   {% csrf_token %}
-  <table>
-    <tr>
-      <td>{{ form.username.label_tag }}</td>
-      <td>{{ form.username }}</td>
-    </tr>
-    <tr>
-      <td>{{ form.password.label_tag }}</td>
-      <td>{{ form.password }}</td>
-    </tr>
-  </table>
-  <input type="submit" value="login" />
-  <input type="hidden" name="next" value="{{ next }}" />
+  {% if next %}
+    {% if user.is_authenticated %}
+    <div class="form-row">
+      <p>Please sign in with an authorized account.</p>
+    {% else %}
+    <div class="form-row">
+      <div class="form-group col-md-4">
+          <legend>Sign in</legend>
+      </div>
+      <div class="form-group col-md-4">
+          <legend><a href="{% url 'account_signup' %}">Create account</a></legend>
+      </div>  
+    </div>
+    <div class="form-group col-md-6">
+      <label for="id_email">Email</label>
+      <input type="email" class="form-control" name="email" autofocus="autofocus" placeholder="Email" max_length="255" id="id_email">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="id_password">Password</label>
+      <input type="password" class="form-control" name="password" id="id_password" placeholder="Password">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <button type="submit" class="btn btn-primary">Sign in</button>
+        <input type="hidden" name="next" value="{{ next }}" />
+      </div>
+      <div class="form-group col-md-4">
+        <a class="forgot_password" href="{% url 'account_change_password' %}">Reset password</a>
+      </div>
+    </div>
+    {% endif %}
+  {% endif %}
 </form>
-
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 
 {% endblock %}
+  

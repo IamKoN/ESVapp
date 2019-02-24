@@ -1,14 +1,11 @@
 {% extends 'base.html' %}
-{% block esv_search_result %}
+{% block content %}
     {% if no_results_found %}
-    <div class="container"><br>
         <strong>{{error_msg}}</strong>
-    </div>
     {% else %}
-    <div class="container"><br>
         {% if all_results %}
         <h4>{{total_results}} results for "{{user_query}}" </h4>
-        <form action="{% url 'esv_search:search' %}" method="get">
+        <form action="{% url 'search_esv:search' %}" method="get">
             <input type="hidden" name="q" value={{user_query}}><br>
             <div class="form-group">
                 <label for="selectResultsPerPage">Results per Page</label>
@@ -42,6 +39,5 @@
             <li class="list-group-item"><strong>{{reference}} - </strong>{{passage}}</li>
         </ul>
         {% endif %}
-    </div>
     {% endif %}
 {% endblock %}

@@ -14,6 +14,9 @@ from .models import Profile
 
 # Views
 # ======================================================================
+def password_reset(request):
+	return render(request, "registration/password_reset_form.html")
+
 class SignInView(generic.View):
 
 	def get(self, request):

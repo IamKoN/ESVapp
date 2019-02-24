@@ -1,8 +1,8 @@
 include LICENSE
 include README
 recursive-include profiles/templates *
-recursive-include esv_search/static *
-recursive-include esv_search/templates *
+recursive-include search_esv/static *
+recursive-include search_esv/templates *
 recursive-include products/templates *
 recursive-include shopping_cart/templates *
 recursive-include docs *
