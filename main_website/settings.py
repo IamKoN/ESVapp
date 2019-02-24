@@ -163,7 +163,7 @@ LOGIN_REDIRECT_URL = '/'
 
 # Absolute path to directory where collectstatic will collect static files
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # URL to use when referring to where static files are served from
 STATIC_URL = '/static/'
