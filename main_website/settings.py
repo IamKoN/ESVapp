@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import dj_database_url
 import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+VENV_PATH = os.path.dirname(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -26,12 +29,12 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY',
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv('DJANGO_DEBUG', True))
 
-ALLOWED_HOSTS = [
-    '*',
-    '.***.com',
-    '127.0.0.1',
-    '.herokuapp.com',
-]
+
+# Security: Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 
@@ -42,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    # Disable Django's own staticfiles handling in favour of WhiteNoise
+    # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     
     # added for allauth
@@ -75,7 +81,7 @@ ROOT_URLCONF = 'main_website.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'allauth')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,6 +96,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'main_website.wsgi.application'
 
+
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -99,6 +106,9 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# Change 'default' database configuration with $DATABASE_URL.
+DATABASES['default'].update(dj_database_url.config(conn_max_age=500, ssl_require=True))
 
 
 # Password validation
@@ -129,10 +139,9 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
 
-# Add to test email:
+# Email
+
 SEND_GRID_API_KEY = ''
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = ''
@@ -141,37 +150,37 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = ''
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-VENV_PATH = os.path.dirname(BASE_DIR)
+# Absolute path to directory where collectstatic will collect static files
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # URL to use when referring to where static files are served from
 STATIC_URL = '/static/'
 
-# Absolute path to directory where collectstatic will collect static files
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(VENV_PATH, 'media_root')
-
 # Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_ROOT, 'static'),
+    # os.path.join(BASE_DIR, 'static')
+]
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# Security
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+MEDIA_ROOT = os.path.join(VENV_PATH, 'media_root')
+MEDIA_URL = '/media/'
 
 
 # Django AllAuth Settings
@@ -180,24 +189,18 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
-
 SITE_ID = 1
 
-# Heroku Settings for Django
-
-django_heroku.settings(locals())
 
 # ESV API settings
 
 API_KEY = 'c301f49b5000085fafc0dfb1d696d8855e78a46a'
 API_SEARCH_URL = 'https://api.esv.org/v3/passage/search/'
 API_TEXT_URL = 'https://api.esv.org/v3/passage/text/'
-
 API_HEADERS = {
     'Accept': 'application/json',
     'Authorization': 'Token %s' % API_KEY
 }
-
 API_OPTIONS = {
     'include-passage-references': 'false',
     'include-first-verse-numbers': 'false',
@@ -236,3 +239,15 @@ else:
     BT_MERCHANT_ID='h7bvbc2hfv38qzcv'
     BT_PUBLIC_KEY='z6m9n9x4429njpq7'
     BT_PRIVATE_KEY='def748a813a207e7db6b0f8d2d6ffcd5'
+
+
+# Heroku Settings for Django
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Activate Django-Heroku
+django_heroku.settings(locals())
