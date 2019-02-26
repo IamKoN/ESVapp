@@ -41,7 +41,8 @@ def add_to_cart(request, **kwargs):
     # status: check if the user already owns this product
     order_item, status = OrderItem.objects.get_or_create(product=product)
     # create order associated with the user
-    user_order, status = Order.objects.get_or_create(owner=user_profile, is_ordered=False)
+    user_order, status = Order.objects.get_or_create(
+        owner=user_profile, is_ordered=False)
     user_order.items.add(order_item)
     if status:
         # generate a reference code
@@ -88,10 +89,10 @@ def checkout(request, **kwargs):
                 )
 
                 return redirect(reverse('shopping_cart:update_records',
-                        kwargs={
-                            'token': token
-                        })
-                    )
+                                        kwargs={
+                                            'token': token
+                                        })
+                                )
             except stripe.CardError as e:
                 message.info(request, "Your card has been declined.")
         else:
@@ -105,15 +106,15 @@ def checkout(request, **kwargs):
 
             if result.is_success or result.transaction:
                 return redirect(reverse('shopping_cart:update_records',
-                        kwargs={
-                            'token': result.transaction.id
-                        })
-                    )
+                                        kwargs={
+                                            'token': result.transaction.id
+                                        })
+                                )
             else:
                 for x in result.errors.deep_errors:
                     messages.info(request, x)
                 return redirect(reverse('shopping_cart:checkout'))
-            
+
     context = {
         'order': existing_order,
         'client_token': client_token,
@@ -129,10 +130,10 @@ def update_transaction_records(request, token):
     order_to_purchase = get_user_pending_order(request)
 
     # update the placed order
-    order_to_purchase.is_ordered=True
-    order_to_purchase.date_ordered=datetime.datetime.now()
+    order_to_purchase.is_ordered = True
+    order_to_purchase.date_ordered = datetime.datetime.now()
     order_to_purchase.save()
-    
+
     # get all items in the order - generates a queryset
     order_items = order_to_purchase.items.all()
 
@@ -146,13 +147,12 @@ def update_transaction_records(request, token):
     user_profile.owned_item.add(*order_products)
     user_profile.save()
 
-    
     # create and save a transaction
     transaction = Transaction(profile=request.user.profile,
-                            token=token,
-                            order_id=order_to_purchase.id,
-                            amount=order_to_purchase.get_cart_total(),
-                            success=True)
+                              token=token,
+                              order_id=order_to_purchase.id,
+                              amount=order_to_purchase.get_cart_total(),
+                              success=True)
     transaction.save()
 
     # send an email to the customer: look at tutorial on how to send emails with sendgrid
@@ -176,8 +176,10 @@ gateway = braintree.BraintreeGateway(
     )
 )
 
+
 def generate_order_id():
-    date_str = date.today().strftime('%Y%m%d')[2:] + str(datetime.datetime.now().second)
+    date_str = date.today().strftime('%Y%m%d')[
+        2:] + str(datetime.datetime.now().second)
     rand_str = "".join([random.choice(string.digits) for count in range(3)])
     return date_str + rand_str
 

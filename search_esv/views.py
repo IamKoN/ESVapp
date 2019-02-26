@@ -1,7 +1,7 @@
 import requests
 
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.views import generic
 
 from main_website.settings import API_HEADERS, API_OPTIONS, API_SEARCH_URL, API_TEXT_URL
@@ -12,6 +12,7 @@ from main_website.settings import API_HEADERS, API_OPTIONS, API_SEARCH_URL, API_
 
 def index(request):
     return render(request, 'search_esv/index.html')
+
 
 class SearchView(generic.View):
 
@@ -49,10 +50,10 @@ class SearchView(generic.View):
             return render(request, 'search_esv/results.html', context=context)
         except NotFound as e:
             if e.status == 404:
-                return render(request, 'search_esv/results.html', {'no_results_found': True,'error_msg': e.msg})
+                return render(request, 'search_esv/results.html', {'no_results_found': True, 'error_msg': e.msg})
             else:
-                return HttpResponse('ESV API Error', status=e.status) 
-    
+                return HttpResponse('ESV API Error', status=e.status)
+
     def post(self, request):
         return render(request, 'search_esv/index.html')
 
@@ -64,11 +65,12 @@ class SearchView(generic.View):
 def get_passage_search(user_query, page_num, page_size):
     request_params = {
         'q': user_query,
-        'page':page_num,
-        'page-size':page_size,
+        'page': page_num,
+        'page-size': page_size,
     }
 
-    response = requests.get(API_SEARCH_URL, params=request_params, headers=API_HEADERS)
+    response = requests.get(
+        API_SEARCH_URL, params=request_params, headers=API_HEADERS)
     if response.status_code == 404:
         raise NotFound(status=404, msg='Error: Passage(s) not found')
     return response.json()
@@ -78,7 +80,8 @@ def get_passage_search(user_query, page_num, page_size):
 def get_passage_text(user_query):
     request_params = dict(q=user_query)
     request_params.update(API_OPTIONS)
-    response = requests.get(API_TEXT_URL, params=request_params, headers=API_HEADERS)
+    response = requests.get(
+        API_TEXT_URL, params=request_params, headers=API_HEADERS)
     if response.status_code == 404:
         raise NotFound(status=404, msg='Error: Verse not found')
     return response.json()

@@ -24,7 +24,7 @@ VENV_PATH = os.path.dirname(BASE_DIR)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY',
-        '-&%4hhs)233(_fdbba23+sda23@16!~nadsasd^fab98x9c_cl#009ad3-91')
+                       '-&%4hhs)233(_fdbba23+sda23@16!~nadsasd^fab98x9c_cl#009ad3-91')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv('DJANGO_DEBUG', True))
@@ -49,9 +49,9 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    
+
     # added for allauth
-    'django.contrib.sites', 
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'products',
     'shopping_cart',
     'search_esv'
-    
+
 ]
 
 MIDDLEWARE = [
@@ -108,7 +108,8 @@ DATABASES = {
 }
 
 # Change 'default' database configuration with $DATABASE_URL.
-DATABASES['default'].update(dj_database_url.config(conn_max_age=500, ssl_require=True))
+DATABASES['default'].update(dj_database_url.config(
+    conn_max_age=500, ssl_require=True))
 
 
 # Password validation
@@ -227,18 +228,18 @@ if DEBUG:
     # test keys
     STRIPE_PUBLISHABLE_KEY = 'pk_test_KA6Cf0oC5c235Qa63SAZrrAF'
     STRIPE_SECRET_KEY = 'sk_test_MANe2GKDofSF7dTiS7rsvHvg'
-    BT_ENVIRONMENT='sandbox'
-    BT_MERCHANT_ID='h7bvbc2hfv38qzcv'
-    BT_PUBLIC_KEY='z6m9n9x4429njpq7'
-    BT_PRIVATE_KEY='def748a813a207e7db6b0f8d2d6ffcd5'
+    BT_ENVIRONMENT = 'sandbox'
+    BT_MERCHANT_ID = 'h7bvbc2hfv38qzcv'
+    BT_PUBLIC_KEY = 'z6m9n9x4429njpq7'
+    BT_PRIVATE_KEY = 'def748a813a207e7db6b0f8d2d6ffcd5'
 else:
     # live keys
     STRIPE_PUBLISHABLE_KEY = 'pk_test_KA6Cf0oC5c235Qa63SAZrrAF'
     STRIPE_SECRET_KEY = 'sk_test_MANe2GKDofSF7dTiS7rsvHvg'
-    BT_ENVIRONMENT='sandbox'
-    BT_MERCHANT_ID='h7bvbc2hfv38qzcv'
-    BT_PUBLIC_KEY='z6m9n9x4429njpq7'
-    BT_PRIVATE_KEY='def748a813a207e7db6b0f8d2d6ffcd5'
+    BT_ENVIRONMENT = 'sandbox'
+    BT_MERCHANT_ID = 'h7bvbc2hfv38qzcv'
+    BT_PUBLIC_KEY = 'z6m9n9x4429njpq7'
+    BT_PRIVATE_KEY = 'def748a813a207e7db6b0f8d2d6ffcd5'
 
 
 # Heroku Settings for Django

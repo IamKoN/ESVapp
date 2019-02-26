@@ -17,7 +17,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Order',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('ref_code', models.CharField(max_length=15)),
                 ('is_ordered', models.BooleanField(default=False)),
                 ('date_ordered', models.DateTimeField(auto_now=True)),
@@ -26,23 +27,27 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='OrderItem',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('is_ordered', models.BooleanField(default=False)),
                 ('date_added', models.DateTimeField(auto_now=True)),
                 ('date_ordered', models.DateTimeField(null=True)),
-                ('product', models.OneToOneField(null=True, on_delete=django.db.models.deletion.SET_NULL, to='products.Product')),
+                ('product', models.OneToOneField(
+                    null=True, on_delete=django.db.models.deletion.SET_NULL, to='products.Product')),
             ],
         ),
         migrations.CreateModel(
             name='Transaction',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('token', models.CharField(max_length=120)),
                 ('order_id', models.CharField(max_length=120)),
                 ('amount', models.DecimalField(decimal_places=2, max_digits=100)),
                 ('success', models.BooleanField(default=True)),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='profiles.Profile')),
+                ('profile', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='profiles.Profile')),
             ],
             options={
                 'ordering': ['-timestamp'],
@@ -56,6 +61,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='order',
             name='owner',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='profiles.Profile'),
+            field=models.ForeignKey(
+                null=True, on_delete=django.db.models.deletion.SET_NULL, to='profiles.Profile'),
         ),
     ]

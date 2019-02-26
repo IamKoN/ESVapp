@@ -1,3 +1,4 @@
+
 import datetime
 import unittest
 
@@ -12,8 +13,9 @@ from .models import Question
 
 # Manage test cases
 
+
 class GetPassageTestCase(TestCase):
-    
+
     def test_get_passage(self):
         value = esv.get_passage('gen 1:1')
         OUT = '<div class="esv"><h2>Genesis 1:1 <object type="application/x-shockwave-flash"  data="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001001" width="40" height="12" class="audio"><param name="movie" value="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001001" /><param name="wmode" value="transparent" /></object></h2>\n<div class="esv-text">\n<p class="chapter-first" id="p01001001.06-1"><span class="chapter-num" id="v01001001-1">1:1&nbsp;</span>In the beginning, God created the heavens and the earth.  (<a href="http://www.esv.org" class="copyright">ESV</a>)</p>\n</div>\n</div>'
@@ -39,6 +41,7 @@ class GetPassageTestCase(TestCase):
         OUT = '<div class="esv"><h2>Genesis 1:7 <object type="application/x-shockwave-flash"  data="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001007" width="40" height="12" class="audio"><param name="movie" value="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001007" /><param name="wmode" value="transparent" /></object></h2>\n<div class="esv-text"><p id="p01001007.01-1"><span class="verse-num" id="v01001007-1">7&nbsp;</span>And God made the expanse and separated the waters that were under the expanse from the waters that were above the expanse. And it was so.  (<a href="http://www.esv.org" class="copyright">ESV</a>)</p>\n</div>\n</div>'
         self.assertEqual(value, OUT)
 
+
 class PassageInlineTestCase(TestCase):
 
     def setUp(self):
@@ -46,7 +49,7 @@ class PassageInlineTestCase(TestCase):
         registry = Registry()
         registry.register('passage', PassageInline)
         self.inlines = registry
-        
+
     def test_inline_passage(self):
         value = '{{ passage gen 1:1 }}'
         OUT = '<div class="esv"><h2>Genesis 1:1 <object type="application/x-shockwave-flash"  data="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001001" width="40" height="12" class="audio"><param name="movie" value="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001001" /><param name="wmode" value="transparent" /></object></h2>\n<div class="esv-text">\n<p class="chapter-first" id="p01001001.06-1"><span class="chapter-num" id="v01001001-1">1:1&nbsp;</span>In the beginning, God created the heavens and the earth.  (<a href="http://www.esv.org" class="copyright">ESV</a>)</p>\n</div>\n</div>'
@@ -70,17 +73,18 @@ class PassageInlineTestCase(TestCase):
         OUT = '<div class="esv"><h2>Genesis 1:7 <object type="application/x-shockwave-flash"  data="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001007" width="40" height="12" class="audio"><param name="movie" value="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001007" /><param name="wmode" value="transparent" /></object></h2>\n<div class="esv-text"><p id="p01001007.01-1"><span class="verse-num" id="v01001007-1">7&nbsp;</span>And God made the expanse and separated the waters that were under the expanse from the waters that were above the expanse. And it was so.  (<a href="http://www.esv.org" class="copyright">ESV</a>)</p>\n</div>\n</div>'
         self.assertEqual(self.inlines.process(value), OUT)
 
+
 class PassageTemplateTagTestCase(TestCase):
-    
+
     def assert_render(self, expected, template_string, context_dict=None):
         """A shortcut for testing template output."""
         if context_dict is None:
             context_dict = {}
-        
+
         c = Context(context_dict)
         t = Template(template_string)
         return self.assertEqual(expected, t.render(c))
-        
+
     def test_tt_passage(self):
         template = '{% load passage %}{% passage "gen 1:1" %}'
         OUT = '<div class="esv"><h2>Genesis 1:1 <object type="application/x-shockwave-flash"  data="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001001" width="40" height="12" class="audio"><param name="movie" value="http://www.esvapi.org/assets/play.swf?myUrl=hw%2F01001001" /><param name="wmode" value="transparent" /></object></h2>\n<div class="esv-text">\n<p class="chapter-first" id="p01001001.06-1"><span class="chapter-num" id="v01001001-1">1:1&nbsp;</span>In the beginning, God created the heavens and the earth.  (<a href="http://www.esv.org" class="copyright">ESV</a>)</p>\n</div>\n</div>'
@@ -120,12 +124,3 @@ class PassageTemplateTagTestCase(TestCase):
     def test_wrong_values(self):
         template = '{% load passage %}{% passage "gen 1:1" audio maybe %}'
         self.assertRaises(TemplateSyntaxError, Template, template)
-
-class PassageModelTests(TestCase):
-"""insert test cases here"""
-
-    class PassageSearchViewTests(TestCase):
-        """insert test cases here"""
-
-    class PassageDetailViewTests(TestCase):
-        """insert test cases here"""
