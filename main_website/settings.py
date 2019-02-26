@@ -163,16 +163,16 @@ LOGIN_REDIRECT_URL = '/'
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 # Absolute path to directory where collectstatic will collect static files
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # URL to use when referring to where static files are served from
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, 'static'),
-    # os.path.join(BASE_DIR, 'static')
+    # os.path.join(PROJECT_ROOT, 'static'),
+    os.path.join(BASE_DIR, 'static')
 ]
 
 STATICFILES_FINDERS = [

@@ -1,3 +1,7 @@
+from django.contrib.auth.models import User
+from django.shortcuts import render
+
+
 from shopping_cart.models import Order
 from .models import Profile
 
