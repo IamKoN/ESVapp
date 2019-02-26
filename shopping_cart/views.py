@@ -96,13 +96,23 @@ def checkout(request, **kwargs):
             except stripe.CardError as e:
                 message.info(request, "Your card has been declined.")
         else:
-            result = transact({
-                'amount': existing_order.get_cart_total(),
-                'payment_method_nonce': request.POST['payment_method_nonce'],
-                'options': {
-                    "submit_for_settlement": True
-                }
-            })
+            if existing_order:
+                result = transact({
+                    'amount': existing_order.get_cart_total(),
+                    'payment_method_nonce': request.POST['payment_method_nonce'],
+                    'options': {
+                        "submit_for_settlement": True
+                    }
+                })
+            else:
+                result = transact({
+                    'amount': 0,
+                    'payment_method_nonce': request.POST['payment_method_nonce'],
+                    'options': {
+                        "submit_for_settlement": True
+                    }
+                })
+
 
             if result.is_success or result.transaction:
                 return redirect(reverse('shopping_cart:update_records',

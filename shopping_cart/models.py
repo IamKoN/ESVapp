@@ -28,7 +28,10 @@ class Order(models.Model):
         return self.items.all()
 
     def get_cart_total(self):
-        return sum([item.product.price for item in self.items.all()])
+        if self.items.exists():
+            return sum([item.product.price for item in self.items.all()])
+        else:
+            return 0
 
     def __str__(self):
         return '{0} - {1}'.format(self.owner, self.ref_code)
