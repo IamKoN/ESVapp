@@ -20,11 +20,11 @@ def password_reset(request):
 class SignInView(generic.View):
 
 	def get(self, request):
-		email = request.GET.get('email', 'email@example.com')
+		email = request.GET.get('email', 'email@esvnote.herokuapp.com')
 		return render(request, "profiles/signin.html")
 
 	def post(self, request):
-		email = request.POST.get('email', 'email@example.com')
+		email = request.POST.get('email', 'email@esvnote.herokuapp.com')
 		password = request.POST.get('password', ' ')
 		user = authenticate(request, username=email, password=password)
 		if user is not None:

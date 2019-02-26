@@ -1,7 +1,15 @@
-body, html {
-  height: 100%;
-  background-color: #f7f8f9;
-  color: #6b7c93;
+body{
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  color:  #003244;
+  background: white;
+  background-attachment: scroll;
+  background-position-y: 15%;
+  background-position-x: 50%;
+  font-family: 'Open Sans', sans-serif;
+  background-size: auto;
+  height: auto;
 }
 
 button {
@@ -56,9 +64,6 @@ label {
   margin-bottom: 8px;
 }
 
-.checkoutMethods {
- 
-}
 #checkoutMethods {
   background: #fff;
   border-radius: 2px;

@@ -37,8 +37,8 @@ def add_to_cart(request, **kwargs):
     user_profile = get_object_or_404(Profile, user=request.user)
     # filter products by id
     product = Product.objects.filter(id=kwargs.get('item_id', "")).first()
-    # check if the user already owns this product
-    # create orderItem of the selected product
+    # order_item: create order item of selected product
+    # status: check if the user already owns this product
     order_item, status = OrderItem.objects.get_or_create(product=product)
     # create order associated with the user
     user_order, status = Order.objects.get_or_create(owner=user_profile, is_ordered=False)
@@ -49,8 +49,8 @@ def add_to_cart(request, **kwargs):
         user_order.save()
 
     # show confirmation message and redirect back to the same page
-    messages.info(request, "item added to cart")
-    return redirect(reverse('products:product-list'))
+    messages.info(request, "Item added to cart.")
+    return redirect(reverse('products:product_list'))
 
 
 @login_required()
@@ -120,7 +120,7 @@ def checkout(request, **kwargs):
         'STRIPE_PUBLISHABLE_KEY': publishKey
     }
 
-    return render(request, 'shopping_cart/checkout_old.html', context)
+    return render(request, 'shopping_cart/checkout.html', context)
 
 
 @login_required()

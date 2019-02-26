@@ -15,7 +15,7 @@ setup(
     license='BSD 2 License',
     description='Django app to demo an ecommerce website.',
     long_description=README,
-    url='https://www.example.com/',
+    url='https://esvnote.herokuapp.com/',
     author='Nathan Robinson',
     author_email='nsean.robinson@gmail.com',
     classifiers=[
