@@ -18,9 +18,6 @@
                     <td>
                         {% if object in user.profile.owned_item.all %}
                             <a href="{% url 'shopping_cart:add_to_cart' object.id %}" class="btn btn-warning">Add to cart</a>
-                            {% if object in current_order_products %}
-                                <small>Item already in cart, proceed to checkout</small>
-                            {% endif %}
                             <br><small>You have purchased this item before</small>
                         {% else %}
                             <a href="{% url 'shopping_cart:add_to_cart' object.id %}" class="btn btn-warning">Add to cart</a>
